@@ -16,7 +16,7 @@ public class BankApplication {
     public static void main(String[] args) {
         @SuppressWarnings("unused")
         ConfigurableApplicationContext context = new SpringApplicationBuilder(BankApplication.class).headless(false).web(false).run(args);
-        MainFrame mainFrame = new MainFrame();
+        MainFrame mainFrame = (MainFrame.getInstance());
         mainFrame.setVisible(true);
     }
 
