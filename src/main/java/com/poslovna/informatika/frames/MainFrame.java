@@ -81,7 +81,9 @@ public class MainFrame extends JFrame {
     }
 
     private void initializeHomePage() {
-
+        jPanel.add(new JLabel("Dobrodošli, " + BankApplication.loggedUser.getName()), "wrap");
+        jPanel.add(new JLabel("Uspešno ste se prijavili na sistem."), "wrap");
+        jPanel.add(new JLabel("Bank 2016, Novi Sad"), "wrap");
     }
 
     public static MainFrame getInstance() {
