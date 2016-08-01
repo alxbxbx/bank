@@ -22,10 +22,7 @@ public class MainFrame extends JFrame {
     private static boolean isLoggedIn = false;
     private JPanel jPanel;
 
-    @Autowired
-    UserService userService;
-
-    public MainFrame() {
+    private MainFrame() {
         setTitle("Bank");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setSize(new Dimension(800, 600));
@@ -93,7 +90,7 @@ public class MainFrame extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     String user = username.getText();
                     String pass = password.getText();
-                    loggedUser = userService.login(user, pass);
+                    //loggedUser = userSer
                     if (loggedUser == null) {
                         JOptionPane.showMessageDialog(null, "Korisničko ime ili lozinka nije ispravna.");
                     } else {
