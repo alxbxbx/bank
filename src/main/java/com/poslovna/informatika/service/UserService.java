@@ -28,12 +28,12 @@ public class UserService {
 		return ur.save(user);
 	}
 	
-	public boolean login(User user){
-		User checkUser = ur.findOne(user.getId());
-		if(checkUser.getPassword().equals(user.getPassword()))
-			return true;
+	public User login(String username, String password){
+		User checkUser = ur.findByUsername(username);
+		if(checkUser.getPassword().equals(password))
+			return checkUser;
 
-		return false;
+		return null;
 	}
 
 }
