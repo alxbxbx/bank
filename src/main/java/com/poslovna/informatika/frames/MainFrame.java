@@ -37,14 +37,15 @@ public class MainFrame extends JFrame {
                         == JOptionPane.YES_OPTION) {
                     System.exit(0);
                 }
-
             }
         });
     }
 
     private void initializeMainMenu() {
         JMenuBar menuBar0 = new JMenuBar();
-        JMenu menu0 = new JMenu("Bank");
+
+        // Banka
+        JMenu menu0 = new JMenu("Banka");
         JMenuItem jMenuItem = new JMenuItem("O aplikaciji");
         JMenuItem jMenuItem1 = new JMenuItem("Odjavi se");
         menu0.add(jMenuItem);
@@ -65,8 +66,19 @@ public class MainFrame extends JFrame {
             }
         });
         menuBar0.add(menu0);
+
+        // Obrade
         JMenu menu1 = new JMenu("Obrade");
-        menu1.add(new JMenuItem("Generisanje naloga za medjubankarski transfer (RTGS/Clearing)"));
+        JMenuItem jMenuItem0 = new JMenuItem("RTGS medjubankarski transfer ");
+        menu1.add(jMenuItem0);
+        jMenuItem0.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ClearingFrame cf = new ClearingFrame();
+                cf.setVisible(true);
+            }
+        });
+        menu1.add(new JMenuItem("Clearing medjubankarski transfer (/)"));
         menu1.add(new JMenuItem("Export nalog za medjubankarski transfer u XML datoteku"));
         menu1.add(new JMenuItem("Generisanje naloga za prenos izvoda datom preduzecu"));
         menu1.add(new JMenuItem("Export datog izvoda u XML datotetku"));

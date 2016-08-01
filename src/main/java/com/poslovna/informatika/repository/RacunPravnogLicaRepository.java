@@ -6,4 +6,6 @@ import com.poslovna.informatika.entities.RacunPravnogLica;
 
 public interface RacunPravnogLicaRepository extends JpaRepository<RacunPravnogLica, Integer>{
 
+    RacunPravnogLica findByBrojRacuna(String brojRacuna);
+
 }

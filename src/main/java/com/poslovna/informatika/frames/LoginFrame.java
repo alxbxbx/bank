@@ -14,11 +14,11 @@ import java.awt.event.WindowEvent;
 
 public class LoginFrame extends JFrame {
 
+    private UserService userService = (UserService) ApplicationContextProvider.getContext().getBean("userService");
     public static LoginFrame loginFrame = null;
     private JTextField username;
     private JPasswordField password;
     private JPanel jPanel;
-    private UserService userService = (UserService) ApplicationContextProvider.getContext().getBean("userService");
 
     private LoginFrame() {
         setTitle("Bank");
@@ -35,7 +35,6 @@ public class LoginFrame extends JFrame {
                         == JOptionPane.YES_OPTION) {
                     System.exit(0);
                 }
-
             }
         });
     }
@@ -56,7 +55,8 @@ public class LoginFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String user = username.getText();
                 String pass = password.getText();
-                BankApplication.loggedUser = userService.login(user, pass);
+                // HardCoded for testing purpose...
+                BankApplication.loggedUser = userService.login("test", "test");
                 if (BankApplication.loggedUser == null) {
                     JOptionPane.showMessageDialog(null, "Korisničko ime ili lozinka nije ispravna.");
                 } else {
