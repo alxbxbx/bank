@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import com.poslovna.informatika.entities.User;
 import com.poslovna.informatika.repository.UserRepository;
-import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
