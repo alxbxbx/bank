@@ -9,7 +9,7 @@ public class MainFrame extends JFrame{
 	private static final long serialVersionUID = 1L;
 
 	public MainFrame(){
-		setSize(300,200);
+		setSize(640, 480);
 		setTitle("Swing app wrapped into Spring boot! B|");
 	}
 }
