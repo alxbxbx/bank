@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.poslovna.informatika.entities.User;
 import com.poslovna.informatika.repository.UserRepository;
 
-@Service
+@Service("userService")
 public class UserService {
 	
 	@Autowired

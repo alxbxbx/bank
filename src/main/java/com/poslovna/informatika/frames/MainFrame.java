@@ -1,9 +1,10 @@
 package com.poslovna.informatika.frames;
 
+import com.poslovna.informatika.configuration.ApplicationContextProvider;
 import com.poslovna.informatika.entities.User;
 import com.poslovna.informatika.service.UserService;
+
 import net.miginfocom.swing.MigLayout;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,9 +23,10 @@ public class MainFrame extends JFrame {
     private static User loggedUser = null;
     private static boolean isLoggedIn = false;
     private JPanel jPanel;
+    
 
-    @Autowired
-    UserService userService;
+    UserService userService = (UserService) ApplicationContextProvider.getContext().getBean("userService");
+    
 
     private MainFrame() {
         setTitle("Bank");
