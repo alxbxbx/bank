@@ -58,7 +58,6 @@ public class MainFrame extends JFrame {
 
         // Login
 
-
     }
 
     public static MainFrame getInstance() {
@@ -67,5 +66,4 @@ public class MainFrame extends JFrame {
         }
         return mainFrame;
     }
-
 }
