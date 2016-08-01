@@ -24,10 +24,8 @@ public class MainFrame extends JFrame {
     private static boolean isLoggedIn = false;
     private JPanel jPanel;
     
-
     UserService userService = (UserService) ApplicationContextProvider.getContext().getBean("userService");
     
-
     private MainFrame() {
         setTitle("Bank");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
