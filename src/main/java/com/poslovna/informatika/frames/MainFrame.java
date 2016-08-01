@@ -4,6 +4,7 @@ import com.poslovna.informatika.entities.User;
 import com.poslovna.informatika.service.UserService;
 import net.miginfocom.swing.MigLayout;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+@Component
 public class MainFrame extends JFrame {
 
     private JTextField username;
@@ -22,6 +24,9 @@ public class MainFrame extends JFrame {
     private static User loggedUser = null;
     private static boolean isLoggedIn = false;
     private JPanel jPanel;
+
+    @Autowired
+    UserService userService;
 
     private MainFrame() {
         setTitle("Bank");
@@ -91,11 +96,11 @@ public class MainFrame extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     String user = username.getText();
                     String pass = password.getText();
-                    //loggedUser = userSer
+                    loggedUser = userService.login("test", "test");
                     if (loggedUser == null) {
                         JOptionPane.showMessageDialog(null, "Korisničko ime ili lozinka nije ispravna.");
                     } else {
-                        // Success
+                        JOptionPane.showMessageDialog(null, "GZ!");
                     }
                 }
             });
