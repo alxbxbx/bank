@@ -4,7 +4,6 @@ import com.poslovna.informatika.entities.User;
 import com.poslovna.informatika.service.UserService;
 import net.miginfocom.swing.MigLayout;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +12,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-@Component
 public class MainFrame extends JFrame {
 
     private JTextField username;
@@ -94,8 +92,8 @@ public class MainFrame extends JFrame {
             loginButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    String user = username.getText();
-                    String pass = password.getText();
+                    String user = "test";
+                    String pass = "test";
                     loggedUser = userService.login("test", "test");
                     if (loggedUser == null) {
                         JOptionPane.showMessageDialog(null, "Korisničko ime ili lozinka nije ispravna.");
