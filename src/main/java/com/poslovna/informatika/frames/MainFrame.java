@@ -1,10 +1,11 @@
 package com.poslovna.informatika.frames;
 
-import com.poslovna.informatika.entities.PravnoLice;
+import com.poslovna.informatika.entities.User;
+import com.poslovna.informatika.service.UserService;
 import net.miginfocom.swing.MigLayout;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.*;
-import javax.swing.text.JTextComponent;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,11 +14,17 @@ import java.awt.event.WindowEvent;
 
 public class MainFrame extends JFrame {
 
+    private JTextField username;
+    private JPasswordField password;
+
     private static final long serialVersionUID = 1L;
     private static MainFrame mainFrame;
-    private static PravnoLice loggedUser = null;
+    private static User loggedUser = null;
     private static boolean isLoggedIn = false;
     private JPanel jPanel;
+
+    @Autowired
+    UserService userService;
 
     public MainFrame() {
         setTitle("Bank");
@@ -75,15 +82,24 @@ public class MainFrame extends JFrame {
             jPanel.add(new JLabel("Ukoliko niste ulogovani, nećete moći da pristupite svim opcijama koje program nudi."), "wrap");
             jPanel.add(new JLabel("Molimo Vas da se prijavite na sistem."), "wrap");
             jPanel.add(new JLabel("Korisničko ime:"), "wrap");
-            jPanel.add(new JTextField(null, 20), "wrap");
+            username = new JTextField(null, 20);
+            jPanel.add(username, "wrap");
             jPanel.add(new JLabel("Lozinka:"), "wrap");
-            jPanel.add(new JTextField(null, 20), "wrap");
+            password = new JPasswordField(null, 20);
+            jPanel.add(password, "wrap");
             JButton loginButton = new JButton("Prijavi se");
             jPanel.add(loginButton);
             loginButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    JOptionPane.showMessageDialog(null, "najs");
+                    String user = username.getText();
+                    String pass = password.getText();
+                    loggedUser = userService.login(user, pass);
+                    if (loggedUser == null) {
+                        JOptionPane.showMessageDialog(null, "Korisničko ime ili lozinka nije ispravna.");
+                    } else {
+                        // Success
+                    }
                 }
             });
         }
