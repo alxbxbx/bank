@@ -12,11 +12,12 @@ import com.poslovna.informatika.frames.MainFrame;
 @ComponentScan
 @EnableAutoConfiguration
 public class BankApplication {
-	public static void main(String[] args){
-		@SuppressWarnings("unused")
-		ConfigurableApplicationContext context = new SpringApplicationBuilder(BankApplication.class).headless(false).web(false).run(args);
-		MainFrame mainFrame = new MainFrame();
-		mainFrame.setVisible(true);
-	}
-	
+
+    public static void main(String[] args) {
+        @SuppressWarnings("unused")
+        ConfigurableApplicationContext context = new SpringApplicationBuilder(BankApplication.class).headless(false).web(false).run(args);
+        MainFrame mainFrame = new MainFrame();
+        mainFrame.setVisible(true);
+    }
+
 }

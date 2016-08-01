@@ -14,265 +14,263 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
-public class AnalitikaIzvoda implements Serializable{
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue
-	private Integer id;
-	private Integer brojStavke;
-	private String nalogodavac;
-	private String svrhaPlacanja;
-	private String primalac;
-	private Date datumPrijema;
-	private Date datumValute;
-	private String racunDuznika;
-	private Integer modelZaduzenja;
-	private String pozivNaBrojZaduzenja;
-	private String racunPoverioca;
-	private Integer modelOdobrenja;
-	private String pozivNaBrojOdobrenja;
-	private boolean hitno;
-	private double iznos;
-	private String smer;
-	private Integer tipGreske;
-	private String status;
-	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-	private NaseljenoMesto naseljenoMesto;
-	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-	private VrstaPlacanja vrstaPlacanja;
-	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-	private Valuta valuta;
-	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-	private DnevnoStanjeRacuna dnevnoStanjeRacuna;
-	
-	@OneToMany(mappedBy = "analitikaIzvoda", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-	private List<AnalitikaPreseka> analitikePreseka = new ArrayList<AnalitikaPreseka>();
-	
-	public AnalitikaIzvoda(){}
+public class AnalitikaIzvoda implements Serializable {
 
-	public AnalitikaIzvoda(Integer id, Integer brojStavke, String nalogodavac, String svrhaPlacanja, String primalac,
-			Date datumPrijema, Date datumValute, String racunDuznika, Integer modelZaduzenja,
-			String pozivNaBrojZaduzenja, String racunPoverioca, Integer modelOdobrenja, String pozivNaBrojOdobrenja,
-			boolean hitno, double iznos, String smer, Integer tipGreske, String status, NaseljenoMesto naseljenoMesto,
-			VrstaPlacanja vrstaPlacanja, Valuta valuta, DnevnoStanjeRacuna dnevnoStanjeRacuna,
-			List<AnalitikaPreseka> analitikePreseka) {
-		super();
-		this.id = id;
-		this.brojStavke = brojStavke;
-		this.nalogodavac = nalogodavac;
-		this.svrhaPlacanja = svrhaPlacanja;
-		this.primalac = primalac;
-		this.datumPrijema = datumPrijema;
-		this.datumValute = datumValute;
-		this.racunDuznika = racunDuznika;
-		this.modelZaduzenja = modelZaduzenja;
-		this.pozivNaBrojZaduzenja = pozivNaBrojZaduzenja;
-		this.racunPoverioca = racunPoverioca;
-		this.modelOdobrenja = modelOdobrenja;
-		this.pozivNaBrojOdobrenja = pozivNaBrojOdobrenja;
-		this.hitno = hitno;
-		this.iznos = iznos;
-		this.smer = smer;
-		this.tipGreske = tipGreske;
-		this.status = status;
-		this.naseljenoMesto = naseljenoMesto;
-		this.vrstaPlacanja = vrstaPlacanja;
-		this.valuta = valuta;
-		this.dnevnoStanjeRacuna = dnevnoStanjeRacuna;
-		this.analitikePreseka = analitikePreseka;
-	}
+    private static final long serialVersionUID = 1L;
 
-	public Integer getId() {
-		return id;
-	}
+    @Id
+    @GeneratedValue
+    private Integer id;
+    private Integer brojStavke;
+    private String nalogodavac;
+    private String svrhaPlacanja;
+    private String primalac;
+    private Date datumPrijema;
+    private Date datumValute;
+    private String racunDuznika;
+    private Integer modelZaduzenja;
+    private String pozivNaBrojZaduzenja;
+    private String racunPoverioca;
+    private Integer modelOdobrenja;
+    private String pozivNaBrojOdobrenja;
+    private boolean hitno;
+    private double iznos;
+    private String smer;
+    private Integer tipGreske;
+    private String status;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private NaseljenoMesto naseljenoMesto;
 
-	public Integer getBrojStavke() {
-		return brojStavke;
-	}
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private VrstaPlacanja vrstaPlacanja;
 
-	public void setBrojStavke(Integer brojStavke) {
-		this.brojStavke = brojStavke;
-	}
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private Valuta valuta;
 
-	public String getNalogodavac() {
-		return nalogodavac;
-	}
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    private DnevnoStanjeRacuna dnevnoStanjeRacuna;
 
-	public void setNalogodavac(String nalogodavac) {
-		this.nalogodavac = nalogodavac;
-	}
+    @OneToMany(mappedBy = "analitikaIzvoda", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    private List<AnalitikaPreseka> analitikePreseka = new ArrayList<AnalitikaPreseka>();
 
-	public String getSvrhaPlacanja() {
-		return svrhaPlacanja;
-	}
+    public AnalitikaIzvoda() {
+    }
 
-	public void setSvrhaPlacanja(String svrhaPlacanja) {
-		this.svrhaPlacanja = svrhaPlacanja;
-	}
+    public AnalitikaIzvoda(Integer id, Integer brojStavke, String nalogodavac, String svrhaPlacanja, String primalac,
+                           Date datumPrijema, Date datumValute, String racunDuznika, Integer modelZaduzenja,
+                           String pozivNaBrojZaduzenja, String racunPoverioca, Integer modelOdobrenja, String pozivNaBrojOdobrenja,
+                           boolean hitno, double iznos, String smer, Integer tipGreske, String status, NaseljenoMesto naseljenoMesto,
+                           VrstaPlacanja vrstaPlacanja, Valuta valuta, DnevnoStanjeRacuna dnevnoStanjeRacuna,
+                           List<AnalitikaPreseka> analitikePreseka) {
+        super();
+        this.id = id;
+        this.brojStavke = brojStavke;
+        this.nalogodavac = nalogodavac;
+        this.svrhaPlacanja = svrhaPlacanja;
+        this.primalac = primalac;
+        this.datumPrijema = datumPrijema;
+        this.datumValute = datumValute;
+        this.racunDuznika = racunDuznika;
+        this.modelZaduzenja = modelZaduzenja;
+        this.pozivNaBrojZaduzenja = pozivNaBrojZaduzenja;
+        this.racunPoverioca = racunPoverioca;
+        this.modelOdobrenja = modelOdobrenja;
+        this.pozivNaBrojOdobrenja = pozivNaBrojOdobrenja;
+        this.hitno = hitno;
+        this.iznos = iznos;
+        this.smer = smer;
+        this.tipGreske = tipGreske;
+        this.status = status;
+        this.naseljenoMesto = naseljenoMesto;
+        this.vrstaPlacanja = vrstaPlacanja;
+        this.valuta = valuta;
+        this.dnevnoStanjeRacuna = dnevnoStanjeRacuna;
+        this.analitikePreseka = analitikePreseka;
+    }
 
-	public String getPrimalac() {
-		return primalac;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setPrimalac(String primalac) {
-		this.primalac = primalac;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public Date getDatumPrijema() {
-		return datumPrijema;
-	}
+    public Integer getBrojStavke() {
+        return brojStavke;
+    }
 
-	public void setDatumPrijema(Date datumPrijema) {
-		this.datumPrijema = datumPrijema;
-	}
+    public void setBrojStavke(Integer brojStavke) {
+        this.brojStavke = brojStavke;
+    }
 
-	public Date getDatumValute() {
-		return datumValute;
-	}
+    public String getNalogodavac() {
+        return nalogodavac;
+    }
 
-	public void setDatumValute(Date datumValute) {
-		this.datumValute = datumValute;
-	}
+    public void setNalogodavac(String nalogodavac) {
+        this.nalogodavac = nalogodavac;
+    }
 
-	public String getRacunDuznika() {
-		return racunDuznika;
-	}
+    public String getSvrhaPlacanja() {
+        return svrhaPlacanja;
+    }
 
-	public void setRacunDuznika(String racunDuznika) {
-		this.racunDuznika = racunDuznika;
-	}
+    public void setSvrhaPlacanja(String svrhaPlacanja) {
+        this.svrhaPlacanja = svrhaPlacanja;
+    }
 
-	public Integer getModelZaduzenja() {
-		return modelZaduzenja;
-	}
+    public String getPrimalac() {
+        return primalac;
+    }
 
-	public void setModelZaduzenja(Integer modelZaduzenja) {
-		this.modelZaduzenja = modelZaduzenja;
-	}
+    public void setPrimalac(String primalac) {
+        this.primalac = primalac;
+    }
 
-	public String getPozivNaBrojZaduzenja() {
-		return pozivNaBrojZaduzenja;
-	}
+    public Date getDatumPrijema() {
+        return datumPrijema;
+    }
 
-	public void setPozivNaBrojZaduzenja(String pozivNaBrojZaduzenja) {
-		this.pozivNaBrojZaduzenja = pozivNaBrojZaduzenja;
-	}
+    public void setDatumPrijema(Date datumPrijema) {
+        this.datumPrijema = datumPrijema;
+    }
 
-	public String getRacunPoverioca() {
-		return racunPoverioca;
-	}
+    public Date getDatumValute() {
+        return datumValute;
+    }
 
-	public void setRacunPoverioca(String racunPoverioca) {
-		this.racunPoverioca = racunPoverioca;
-	}
+    public void setDatumValute(Date datumValute) {
+        this.datumValute = datumValute;
+    }
 
-	public Integer getModelOdobrenja() {
-		return modelOdobrenja;
-	}
+    public String getRacunDuznika() {
+        return racunDuznika;
+    }
 
-	public void setModelOdobrenja(Integer modelOdobrenja) {
-		this.modelOdobrenja = modelOdobrenja;
-	}
+    public void setRacunDuznika(String racunDuznika) {
+        this.racunDuznika = racunDuznika;
+    }
 
-	public String getPozivNaBrojOdobrenja() {
-		return pozivNaBrojOdobrenja;
-	}
+    public Integer getModelZaduzenja() {
+        return modelZaduzenja;
+    }
 
-	public void setPozivNaBrojOdobrenja(String pozivNaBrojOdobrenja) {
-		this.pozivNaBrojOdobrenja = pozivNaBrojOdobrenja;
-	}
+    public void setModelZaduzenja(Integer modelZaduzenja) {
+        this.modelZaduzenja = modelZaduzenja;
+    }
 
-	public boolean isHitno() {
-		return hitno;
-	}
+    public String getPozivNaBrojZaduzenja() {
+        return pozivNaBrojZaduzenja;
+    }
 
-	public void setHitno(boolean hitno) {
-		this.hitno = hitno;
-	}
+    public void setPozivNaBrojZaduzenja(String pozivNaBrojZaduzenja) {
+        this.pozivNaBrojZaduzenja = pozivNaBrojZaduzenja;
+    }
 
-	public double getIznos() {
-		return iznos;
-	}
+    public String getRacunPoverioca() {
+        return racunPoverioca;
+    }
 
-	public void setIznos(double iznos) {
-		this.iznos = iznos;
-	}
+    public void setRacunPoverioca(String racunPoverioca) {
+        this.racunPoverioca = racunPoverioca;
+    }
 
-	public String getSmer() {
-		return smer;
-	}
+    public Integer getModelOdobrenja() {
+        return modelOdobrenja;
+    }
 
-	public void setSmer(String smer) {
-		this.smer = smer;
-	}
+    public void setModelOdobrenja(Integer modelOdobrenja) {
+        this.modelOdobrenja = modelOdobrenja;
+    }
 
-	public Integer getTipGreske() {
-		return tipGreske;
-	}
+    public String getPozivNaBrojOdobrenja() {
+        return pozivNaBrojOdobrenja;
+    }
 
-	public void setTipGreske(Integer tipGreske) {
-		this.tipGreske = tipGreske;
-	}
+    public void setPozivNaBrojOdobrenja(String pozivNaBrojOdobrenja) {
+        this.pozivNaBrojOdobrenja = pozivNaBrojOdobrenja;
+    }
 
-	public String getStatus() {
-		return status;
-	}
+    public boolean isHitno() {
+        return hitno;
+    }
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
+    public void setHitno(boolean hitno) {
+        this.hitno = hitno;
+    }
 
-	public NaseljenoMesto getNaseljenoMesto() {
-		return naseljenoMesto;
-	}
+    public double getIznos() {
+        return iznos;
+    }
 
-	public void setNaseljenoMesto(NaseljenoMesto naseljenoMesto) {
-		this.naseljenoMesto = naseljenoMesto;
-	}
+    public void setIznos(double iznos) {
+        this.iznos = iznos;
+    }
 
-	public VrstaPlacanja getVrstaPlacanja() {
-		return vrstaPlacanja;
-	}
+    public String getSmer() {
+        return smer;
+    }
 
-	public void setVrstaPlacanja(VrstaPlacanja vrstaPlacanja) {
-		this.vrstaPlacanja = vrstaPlacanja;
-	}
+    public void setSmer(String smer) {
+        this.smer = smer;
+    }
 
-	public Valuta getValuta() {
-		return valuta;
-	}
+    public Integer getTipGreske() {
+        return tipGreske;
+    }
 
-	public void setValuta(Valuta valuta) {
-		this.valuta = valuta;
-	}
+    public void setTipGreske(Integer tipGreske) {
+        this.tipGreske = tipGreske;
+    }
 
-	public DnevnoStanjeRacuna getDnevnoStanjeRacuna() {
-		return dnevnoStanjeRacuna;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public void setDnevnoStanjeRacuna(DnevnoStanjeRacuna dnevnoStanjeRacuna) {
-		this.dnevnoStanjeRacuna = dnevnoStanjeRacuna;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public List<AnalitikaPreseka> getAnalitikePreseka() {
-		return analitikePreseka;
-	}
+    public NaseljenoMesto getNaseljenoMesto() {
+        return naseljenoMesto;
+    }
 
-	public void setAnalitikePreseka(List<AnalitikaPreseka> analitikePreseka) {
-		this.analitikePreseka = analitikePreseka;
-	}
-	
-	
+    public void setNaseljenoMesto(NaseljenoMesto naseljenoMesto) {
+        this.naseljenoMesto = naseljenoMesto;
+    }
+
+    public VrstaPlacanja getVrstaPlacanja() {
+        return vrstaPlacanja;
+    }
+
+    public void setVrstaPlacanja(VrstaPlacanja vrstaPlacanja) {
+        this.vrstaPlacanja = vrstaPlacanja;
+    }
+
+    public Valuta getValuta() {
+        return valuta;
+    }
+
+    public void setValuta(Valuta valuta) {
+        this.valuta = valuta;
+    }
+
+    public DnevnoStanjeRacuna getDnevnoStanjeRacuna() {
+        return dnevnoStanjeRacuna;
+    }
+
+    public void setDnevnoStanjeRacuna(DnevnoStanjeRacuna dnevnoStanjeRacuna) {
+        this.dnevnoStanjeRacuna = dnevnoStanjeRacuna;
+    }
+
+    public List<AnalitikaPreseka> getAnalitikePreseka() {
+        return analitikePreseka;
+    }
+
+    public void setAnalitikePreseka(List<AnalitikaPreseka> analitikePreseka) {
+        this.analitikePreseka = analitikePreseka;
+    }
 
 }
