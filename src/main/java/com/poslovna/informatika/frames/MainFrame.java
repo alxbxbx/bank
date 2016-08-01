@@ -1,5 +1,6 @@
 package com.poslovna.informatika.frames;
 
+import com.poslovna.informatika.BankApplication;
 import com.poslovna.informatika.configuration.ApplicationContextProvider;
 import com.poslovna.informatika.entities.User;
 import com.poslovna.informatika.service.UserService;
@@ -15,9 +16,6 @@ import java.awt.event.WindowEvent;
 
 public class MainFrame extends JFrame {
 
-    private JTextField username;
-    private JPasswordField password;
-
     private static final long serialVersionUID = 1L;
     private static MainFrame mainFrame;
     private static User loggedUser = null;
@@ -25,6 +23,7 @@ public class MainFrame extends JFrame {
     private JPanel jPanel;
     
     UserService userService = (UserService) ApplicationContextProvider.getContext().getBean("userService");
+
     
     private MainFrame() {
         setTitle("Bank");
@@ -33,9 +32,8 @@ public class MainFrame extends JFrame {
         setLocationRelativeTo(null);
         jPanel = new JPanel(new MigLayout("fillx"));
         initializeMainMenu();
-        initializeLogin();
+        initializeHomePage();
         add(jPanel);
-        setVisible(true);
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent arg0) {
@@ -43,16 +41,28 @@ public class MainFrame extends JFrame {
                         == JOptionPane.YES_OPTION) {
                     System.exit(0);
                 }
-
             }
         });
     }
 
     private void initializeMainMenu() {
         JMenuBar menuBar0 = new JMenuBar();
-        JMenu menu0 = new JMenu("Bank");
+
+        // Banka
+        JMenu menu0 = new JMenu("Banka");
         JMenuItem jMenuItem = new JMenuItem("O aplikaciji");
+        JMenuItem jMenuItem1 = new JMenuItem("Odjavi se");
         menu0.add(jMenuItem);
+        menu0.add(jMenuItem1);
+        jMenuItem1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                BankApplication.isLoggedIn = false;
+                BankApplication.loggedUser = null;
+                setVisible(false);
+                LoginFrame.getInstance().setVisible(true);
+            }
+        });
         jMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -60,8 +70,19 @@ public class MainFrame extends JFrame {
             }
         });
         menuBar0.add(menu0);
+
+        // Obrade
         JMenu menu1 = new JMenu("Obrade");
-        menu1.add(new JMenuItem("Generisanje naloga za medjubankarski transfer (RTGS/Clearing)"));
+        JMenuItem jMenuItem0 = new JMenuItem("RTGS medjubankarski transfer ");
+        menu1.add(jMenuItem0);
+        jMenuItem0.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ClearingFrame cf = new ClearingFrame();
+                cf.setVisible(true);
+            }
+        });
+        menu1.add(new JMenuItem("Clearing medjubankarski transfer (/)"));
         menu1.add(new JMenuItem("Export nalog za medjubankarski transfer u XML datoteku"));
         menu1.add(new JMenuItem("Generisanje naloga za prenos izvoda datom preduzecu"));
         menu1.add(new JMenuItem("Export datog izvoda u XML datotetku"));
@@ -75,35 +96,10 @@ public class MainFrame extends JFrame {
         setJMenuBar(menuBar0);
     }
 
-    private void initializeLogin() {
-        if (isLoggedIn) {
-            jPanel.add(new JLabel("ULOGOVAN!"));
-        } else {
-            jPanel.add(new JLabel("Ukoliko niste ulogovani, nećete moći da pristupite svim opcijama koje program nudi."), "wrap");
-            jPanel.add(new JLabel("Molimo Vas da se prijavite na sistem."), "wrap");
-            jPanel.add(new JLabel("Korisničko ime:"), "wrap");
-            username = new JTextField(null, 20);
-            jPanel.add(username, "wrap");
-            jPanel.add(new JLabel("Lozinka:"), "wrap");
-            password = new JPasswordField(null, 20);
-            jPanel.add(password, "wrap");
-            JButton loginButton = new JButton("Prijavi se");
-            jPanel.add(loginButton);
-            loginButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    String user = "test";
-                    String pass = "test";
-                    loggedUser = userService.login("test", "test");
-                    if (loggedUser == null) {
-                        JOptionPane.showMessageDialog(null, "Korisničko ime ili lozinka nije ispravna.");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "GZ!");
-                    }
-                }
-            });
-        }
-
+    private void initializeHomePage() {
+        jPanel.add(new JLabel("Dobrodošli, " + BankApplication.loggedUser.getName()), "wrap");
+        jPanel.add(new JLabel("Uspešno ste se prijavili na sistem."), "wrap");
+        jPanel.add(new JLabel("Bank 2016, Novi Sad"), "wrap");
     }
 
     public static MainFrame getInstance() {

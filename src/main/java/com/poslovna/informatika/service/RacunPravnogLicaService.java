@@ -21,7 +21,9 @@ public class RacunPravnogLicaService {
 	public List<RacunPravnogLica> findAll(){
 		return racunPravnogLicaRepository.findAll();
 	}
-	
+
+	public RacunPravnogLica findByBrojRacuna(String brojRacuna) { return racunPravnogLicaRepository.findByBrojRacuna(brojRacuna); }
+
 	public RacunPravnogLica save(RacunPravnogLica racunPravnogLica){
 		return racunPravnogLicaRepository.save(racunPravnogLica);
 	}
