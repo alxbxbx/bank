@@ -3,5 +3,6 @@
 .project
 .svn
 .settings
-
+.idea
+*.iml
 /src/main/resources/application.properties
