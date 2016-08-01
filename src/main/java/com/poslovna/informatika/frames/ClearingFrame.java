@@ -2,7 +2,10 @@ package com.poslovna.informatika.frames;
 
 import com.poslovna.informatika.configuration.ApplicationContextProvider;
 import com.poslovna.informatika.entities.KodBanke;
+import com.poslovna.informatika.entities.PravnoLice;
 import com.poslovna.informatika.entities.RacunPravnogLica;
+import com.poslovna.informatika.service.KodBankeService;
+import com.poslovna.informatika.service.PravnoLiceService;
 import com.poslovna.informatika.service.RacunPravnogLicaService;
 import net.miginfocom.swing.MigLayout;
 
@@ -15,7 +18,13 @@ import java.awt.event.WindowEvent;
 
 public class ClearingFrame extends JFrame {
 
-    private RacunPravnogLicaService rplService = (RacunPravnogLicaService) ApplicationContextProvider.getContext().getBean("racunPravnogLicaService");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private RacunPravnogLicaService rplService = (RacunPravnogLicaService) ApplicationContextProvider.getContext().getBean("racunPravnogLicaService");
+    private PravnoLiceService plService = (PravnoLiceService) ApplicationContextProvider.getContext().getBean("pravnoLiceService");
+    private KodBankeService kbService = (KodBankeService) ApplicationContextProvider.getContext().getBean("kodBankeService");
     private JPanel jPanel;
     private JTextField racunDuznika_0;
     private JTextField racunDuznika_1;
@@ -46,6 +55,41 @@ public class ClearingFrame extends JFrame {
     }
 
     private void init() {
+    	
+    	//Primer cuvanja podataka 
+    	/*
+    	RacunPravnogLica rpl = new RacunPravnogLica();
+    	rpl.setBrojRacuna("840191233203");
+    	rpl = rplService.save(rpl);
+    	
+    	PravnoLice pl = new PravnoLice();
+    	pl.setAdresa("Arsenija Carnojevica 96");
+    	pl.seteMail("dnbfly@liquidrepublic.com");
+    	pl.getRacuniPravnihLica().add(rpl);
+    	
+    	pl = plService.save(pl);
+    	
+    	KodBanke kb = new KodBanke();
+    	kb.setSifraBanke(333);
+    	kb.setSWIFTKod("1asdas3ds");
+    	
+    	kb.setPravnoLice(pl);
+    	
+    	kb = kbService.save(kb);
+    	
+    	pl.getKodoviBanke().add(kb);
+    	
+    	pl = plService.save(pl);
+    	
+    	rpl.setPravnoLice(pl);
+    	
+    	rpl = rplService.save(rpl);
+    	
+    	*/
+    	
+    	
+    	
+    	
         jPanel.add(new JLabel("Molimo Vas da popunite formu..."), "wrap");
         jPanel.add(new JLabel(""), "wrap");
         jPanel.add(new JLabel("Primer: 123-123456-123"), "wrap");
@@ -62,7 +106,8 @@ public class ClearingFrame extends JFrame {
                 RacunPravnogLica rpl = rplService.findByBrojRacuna(racunDuznika_0.getText() + "-" + racunDuznika_1.getText() + "-" + racunDuznika_2.getText());
 
                 jPanel.add(new JLabel("SWIFT kod banke:"), "wrap");
-                String[] swifts = new String[rpl.getPravnoLice().getKodoviBanke().size()];
+                int howLong = rpl.getPravnoLice().getKodoviBanke().size();
+                String[] swifts = new String[howLong];
                 int i = 0;
                 for (KodBanke kodBanke : rpl.getPravnoLice().getKodoviBanke()) {
                     swifts[i] = kodBanke.getSWIFTKod().toString();

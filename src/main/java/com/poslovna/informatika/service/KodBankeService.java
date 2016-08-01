@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.poslovna.informatika.entities.KodBanke;
 import com.poslovna.informatika.repository.KodBankeRepository;
 
-@Service
+@Service("kodBankeService")
 public class KodBankeService {
 	
 	@Autowired

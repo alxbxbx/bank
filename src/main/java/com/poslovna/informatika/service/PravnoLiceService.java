@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.poslovna.informatika.entities.PravnoLice;
 import com.poslovna.informatika.repository.PravnoLiceRepository;
 
-@Service
+@Service("pravnoLiceService")
 public class PravnoLiceService {
 	
 	@Autowired

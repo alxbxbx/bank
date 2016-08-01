@@ -20,10 +20,10 @@ public class MainFrame extends JFrame {
     private static MainFrame mainFrame;
     private static User loggedUser = null;
     private static boolean isLoggedIn = false;
-    private JPanel jPanel;
     
     UserService userService = (UserService) ApplicationContextProvider.getContext().getBean("userService");
 
+    private JPanel jPanel;
     
     private MainFrame() {
         setTitle("Bank");

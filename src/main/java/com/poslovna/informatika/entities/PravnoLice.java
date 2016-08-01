@@ -29,7 +29,7 @@ public class PravnoLice implements Serializable {
     private String fax;
     private boolean banka;
 
-    @OneToMany(mappedBy = "pravnoLice", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "pravnoLice", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<KodBanke> kodoviBanke = new ArrayList<KodBanke>();
 
     @OneToMany(mappedBy = "pravnoLice", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
