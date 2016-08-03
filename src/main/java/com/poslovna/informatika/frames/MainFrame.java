@@ -93,7 +93,21 @@ public class MainFrame extends JFrame {
         menu2.add(new JMenuItem("Nalog za prenos sa analitikom"));
         menu2.add(new JMenuItem("Spisak rauna sa stanjem zadate banke"));
         menuBar0.add(menu2);
+        JMenu menu3 = new JMenu("Admin");
+        JMenuItem jMenuItemDrzava = new JMenuItem("Drzava");
+        menu3.add(jMenuItemDrzava);
+        menuBar0.add(menu3);
         setJMenuBar(menuBar0);
+        
+        jMenuItemDrzava.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				DrzavaFrame df = new DrzavaFrame();
+				df.setVisible(true);
+			}
+        	
+        });
     }
 
     private void initializeHomePage() {

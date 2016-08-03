@@ -56,7 +56,7 @@ public class LoginFrame extends JFrame {
                 String user = username.getText();
                 String pass = password.getText();
                 // HardCoded for testing purpose...
-                BankApplication.loggedUser = userService.login("test", "test");
+                BankApplication.loggedUser = userService.login(user, pass);
                 if (BankApplication.loggedUser == null) {
                     JOptionPane.showMessageDialog(null, "Korisničko ime ili lozinka nije ispravna.");
                 } else {
