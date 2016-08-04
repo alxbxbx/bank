@@ -27,9 +27,13 @@ public class Drzava implements Serializable {
     @OneToMany(mappedBy = "drzava", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     private List<Valuta> valute = new ArrayList<Valuta>();
 
-    @OneToMany(mappedBy = "drzava", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "drzava", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     private List<NaseljenoMesto> naseljenaMesta = new ArrayList<NaseljenoMesto>();
-
+    
+    @Override
+    public String toString(){
+    	return nazivDrzave;
+    }
     public Drzava() {
     }
 

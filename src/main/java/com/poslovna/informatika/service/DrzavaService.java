@@ -29,4 +29,8 @@ public class DrzavaService {
 	public void remove(Integer id){
 		drzavaRepository.delete(id);
 	}
+	
+	public Drzava findByNazivDrzave(String nazivDrzave){
+		return drzavaRepository.findByNazivDrzave(nazivDrzave);
+	}
 }

@@ -95,7 +95,9 @@ public class MainFrame extends JFrame {
         menuBar0.add(menu2);
         JMenu menu3 = new JMenu("Admin");
         JMenuItem jMenuItemDrzava = new JMenuItem("Drzava");
+        JMenuItem jMenuItemNaseljenoMesto = new JMenuItem("Naseljeno mesto");
         menu3.add(jMenuItemDrzava);
+        menu3.add(jMenuItemNaseljenoMesto);
         menuBar0.add(menu3);
         setJMenuBar(menuBar0);
         
@@ -105,6 +107,17 @@ public class MainFrame extends JFrame {
 				// TODO Auto-generated method stub
 				DrzavaFrame df = new DrzavaFrame();
 				df.setVisible(true);
+			}
+        	
+        });
+        
+        jMenuItemNaseljenoMesto.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				NaseljenoMestoFrame nmf = new NaseljenoMestoFrame();
+				nmf.setVisible(true);
 			}
         	
         });

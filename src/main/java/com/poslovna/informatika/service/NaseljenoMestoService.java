@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.poslovna.informatika.entities.NaseljenoMesto;
 import com.poslovna.informatika.repository.NaseljenoMestoRepository;
 
-@Service
+@Service("naseljenoMestoService")
 public class NaseljenoMestoService {
 	
 	@Autowired

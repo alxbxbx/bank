@@ -21,7 +21,7 @@ public class NaseljenoMesto implements Serializable {
     @GeneratedValue
     private Integer id;
 
-    private Integer sifraMesta;
+    private String sifraMesta;
     private String naziv;
     private String PTTOznaka;
 
@@ -30,38 +30,46 @@ public class NaseljenoMesto implements Serializable {
 
     @OneToMany(mappedBy = "naseljenoMesto", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     private List<AnalitikaIzvoda> analitikeIzvoda = new ArrayList<AnalitikaIzvoda>();
-
+    
+    @Override
+    public String toString(){
+		return this.naziv;
+    	
+    }
     public NaseljenoMesto() {
     }
 
-    public NaseljenoMesto(Integer id, Integer sifraMesta, String naziv, String pTTOznaka, Drzava drzava,
-                          List<AnalitikaIzvoda> analitikeIzvoda) {
-        super();
-        this.id = id;
-        this.sifraMesta = sifraMesta;
-        this.naziv = naziv;
-        PTTOznaka = pTTOznaka;
-        this.drzava = drzava;
-        this.analitikeIzvoda = analitikeIzvoda;
-    }
+    public NaseljenoMesto(Integer id, String sifraMesta, String naziv, String pTTOznaka, Drzava drzava,
+			List<AnalitikaIzvoda> analitikeIzvoda) {
+		super();
+		this.id = id;
+		this.sifraMesta = sifraMesta;
+		this.naziv = naziv;
+		PTTOznaka = pTTOznaka;
+		this.drzava = drzava;
+		this.analitikeIzvoda = analitikeIzvoda;
+	}
 
-    public Integer getId() {
+
+
+	public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
+    
 
-    public Integer getSifraMesta() {
-        return sifraMesta;
-    }
+    public String getSifraMesta() {
+		return sifraMesta;
+	}
 
-    public void setSifraMesta(Integer sifraMesta) {
-        this.sifraMesta = sifraMesta;
-    }
+	public void setSifraMesta(String sifraMesta) {
+		this.sifraMesta = sifraMesta;
+	}
 
-    public String getNaziv() {
+	public String getNaziv() {
         return naziv;
     }
 
