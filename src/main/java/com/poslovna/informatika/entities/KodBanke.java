@@ -24,6 +24,10 @@ public class KodBanke implements Serializable {
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private PravnoLice pravnoLice;
 
+    public String toString(){
+        return SWIFTKod;
+    }
+
     public KodBanke() {
     }
 
