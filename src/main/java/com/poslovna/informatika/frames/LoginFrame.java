@@ -43,10 +43,10 @@ public class LoginFrame extends JFrame {
         jPanel.add(new JLabel("Ukoliko niste ulogovani, nećete moći da pristupite svim opcijama koje program nudi."), "wrap");
         jPanel.add(new JLabel("Molimo Vas da se prijavite na sistem."), "wrap");
         jPanel.add(new JLabel("Korisničko ime:"), "wrap");
-        username = new JTextField(null, 20);
+        username = new JTextField("test", 20);
         jPanel.add(username, "wrap");
         jPanel.add(new JLabel("Lozinka:"), "wrap");
-        password = new JPasswordField(null, 20);
+        password = new JPasswordField("test", 20);
         jPanel.add(password, "wrap");
         JButton loginButton = new JButton("Prijavi se");
         jPanel.add(loginButton);
