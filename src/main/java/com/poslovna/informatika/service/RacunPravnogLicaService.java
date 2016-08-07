@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.poslovna.informatika.entities.RacunPravnogLica;
 import com.poslovna.informatika.repository.RacunPravnogLicaRepository;
 
-@Service
+@Service("racunPravnogLicaService")
 public class RacunPravnogLicaService {
 	
 	@Autowired
@@ -22,13 +22,23 @@ public class RacunPravnogLicaService {
 		return racunPravnogLicaRepository.findAll();
 	}
 
-	public RacunPravnogLica findByBrojRacuna(String brojRacuna) { return racunPravnogLicaRepository.findByBrojRacuna(brojRacuna); }
+	public RacunPravnogLica findByBrojRacuna(String brojRacuna) {
+		RacunPravnogLica rpl = racunPravnogLicaRepository.findByBrojRacuna(brojRacuna);
+		if(rpl == null)
+			return null;
+		if(rpl.isVazeci() == false)
+			return null;
+		else
+			return rpl;
+	}
 
 	public RacunPravnogLica save(RacunPravnogLica racunPravnogLica){
 		return racunPravnogLicaRepository.save(racunPravnogLica);
 	}
 	
 	public void remove(Integer id){
-		racunPravnogLicaRepository.delete(id);
+		RacunPravnogLica rpl = racunPravnogLicaRepository.findOne(id);
+		rpl.setVazeci(false);
+		racunPravnogLicaRepository.save(rpl);
 	}
 }

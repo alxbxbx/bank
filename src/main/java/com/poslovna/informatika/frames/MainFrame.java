@@ -74,6 +74,7 @@ public class MainFrame extends JFrame {
         // Obrade
         JMenu menu1 = new JMenu("Obrade");
         JMenuItem jMenuItem0 = new JMenuItem("RTGS medjubankarski transfer ");
+        JMenuItem ukidanjeRacuna = new JMenuItem("Ukidanje racuna");
         menu1.add(jMenuItem0);
         jMenuItem0.addActionListener(new ActionListener() {
             @Override
@@ -87,7 +88,7 @@ public class MainFrame extends JFrame {
         menu1.add(new JMenuItem("Generisanje naloga za prenos izvoda datom preduzecu"));
         menu1.add(new JMenuItem("Export datog izvoda u XML datotetku"));
         menu1.add(new JMenuItem("Import stavki placanja iz XML datoteke"));
-        menu1.add(new JMenuItem("Ukidanje racuna"));
+        menu1.add(ukidanjeRacuna);
         menuBar0.add(menu1);
         JMenu menu2 = new JMenu("Izveštaji");
         menu2.add(new JMenuItem("Nalog za prenos sa analitikom"));
@@ -118,6 +119,17 @@ public class MainFrame extends JFrame {
 				// TODO Auto-generated method stub
 				NaseljenoMestoFrame nmf = new NaseljenoMestoFrame();
 				nmf.setVisible(true);
+			}
+        	
+        });
+        
+        ukidanjeRacuna.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				UkidanjeRacunaFrame urf = new UkidanjeRacunaFrame();
+				urf.setVisible(true);
+				
 			}
         	
         });
