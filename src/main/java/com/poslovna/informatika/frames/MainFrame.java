@@ -2,10 +2,17 @@ package com.poslovna.informatika.frames;
 
 import com.poslovna.informatika.BankApplication;
 import com.poslovna.informatika.configuration.ApplicationContextProvider;
+import com.poslovna.informatika.entities.RacunPravnogLica;
 import com.poslovna.informatika.entities.User;
+import com.poslovna.informatika.service.RacunPravnogLicaService;
 import com.poslovna.informatika.service.UserService;
 
 import net.miginfocom.swing.MigLayout;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +20,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MainFrame extends JFrame {
 
@@ -22,6 +32,7 @@ public class MainFrame extends JFrame {
     private static boolean isLoggedIn = false;
     
     UserService userService = (UserService) ApplicationContextProvider.getContext().getBean("userService");
+    private RacunPravnogLicaService rplService = (RacunPravnogLicaService) ApplicationContextProvider.getContext().getBean("racunPravnogLicaService");
 
     private JPanel jPanel;
     
@@ -92,7 +103,8 @@ public class MainFrame extends JFrame {
         menuBar0.add(menu1);
         JMenu menu2 = new JMenu("Izveštaji");
         menu2.add(new JMenuItem("Nalog za prenos sa analitikom"));
-        menu2.add(new JMenuItem("Spisak rauna sa stanjem zadate banke"));
+        JMenuItem spisak = new JMenuItem("Spisak rauna sa stanjem zadate banke");
+        menu2.add(spisak);
         menuBar0.add(menu2);
         JMenu menu3 = new JMenu("Admin");
         JMenuItem jMenuItemDrzava = new JMenuItem("Drzava");
@@ -130,6 +142,32 @@ public class MainFrame extends JFrame {
 				UkidanjeRacunaFrame urf = new UkidanjeRacunaFrame();
 				urf.setVisible(true);
 				
+			}
+        	
+        });
+        
+        spisak.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				try {
+					List<RacunPravnogLica> rpl = rplService.findAll();
+					RacunPravnogLica[] rpls = new RacunPravnogLica[rpl.size()];
+					int i = 0;
+					for(RacunPravnogLica racun : rpl){
+						rpls[i] = racun;
+						i++;
+					}
+					JRDataSource dataSource = new JRBeanArrayDataSource(rpls);
+					JasperPrint jp = JasperFillManager.fillReport(
+							"C://Users//Alxbxbx//Documents//Poslovna informatika//Reports//PReport1.jasper",
+							null);
+					JasperViewer.viewReport(jp, false);
+
+				} catch (Exception ex) {
+				  ex.printStackTrace();
+				}
 			}
         	
         });
