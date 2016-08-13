@@ -34,6 +34,7 @@ public class Drzava implements Serializable {
     public String toString(){
     	return nazivDrzave;
     }
+
     public Drzava() {
     }
 

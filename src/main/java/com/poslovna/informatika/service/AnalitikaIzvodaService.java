@@ -17,7 +17,9 @@ public class AnalitikaIzvodaService {
 	public AnalitikaIzvoda findOne(Integer id){
 		return analitikaIzvodaRepository.findOne(id);
 	}
-	
+
+	public AnalitikaIzvoda save(AnalitikaIzvoda analitikaIzvoda) { return analitikaIzvodaRepository.save(analitikaIzvoda); }
+
 	public List<AnalitikaIzvoda> findAll(){
 		return analitikaIzvodaRepository.findAll();
 	}

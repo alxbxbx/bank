@@ -1,15 +1,10 @@
 package com.poslovna.informatika.frames;
 
 import com.poslovna.informatika.configuration.ApplicationContextProvider;
-import com.poslovna.informatika.entities.KodBanke;
-import com.poslovna.informatika.entities.PravnoLice;
-import com.poslovna.informatika.entities.RacunPravnogLica;
+import com.poslovna.informatika.entities.*;
 import com.poslovna.informatika.formatters.DateLabelFormatter;
-import com.poslovna.informatika.service.KodBankeService;
-import com.poslovna.informatika.service.PravnoLiceService;
-import com.poslovna.informatika.service.RacunPravnogLicaService;
+import com.poslovna.informatika.service.*;
 import net.miginfocom.swing.MigLayout;
-import org.jdatepicker.JDatePicker;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
@@ -20,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class ClearingFrame extends JFrame {
@@ -28,6 +24,8 @@ public class ClearingFrame extends JFrame {
     private RacunPravnogLicaService rplService = (RacunPravnogLicaService) ApplicationContextProvider.getContext().getBean("racunPravnogLicaService");
     private PravnoLiceService plService = (PravnoLiceService) ApplicationContextProvider.getContext().getBean("pravnoLiceService");
     private KodBankeService kbService = (KodBankeService) ApplicationContextProvider.getContext().getBean("kodBankeService");
+    private AnalitikaIzvodaService analitikaIzvodaService = (AnalitikaIzvodaService) ApplicationContextProvider.getContext().getBean("analitikaIzvodaService");
+    private MedjubankarskiTransferService medjubankarskiTransferService = (MedjubankarskiTransferService) ApplicationContextProvider.getContext().getBean("medjubankarskiTransferService");
     private JPanel jPanel;
     private JScrollPane jScrollPane;
     private JButton proveriRacun, posalji;
@@ -173,7 +171,14 @@ public class ClearingFrame extends JFrame {
         posalji.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // save to database
+                AnalitikaIzvoda analitikaIzvoda = new AnalitikaIzvoda();
+                analitikaIzvodaService.save(analitikaIzvoda);
+
+                MedjubankarskiTransfer medjubankarskiTransfer = new MedjubankarskiTransfer();
+                medjubankarskiTransfer.setTip("clearing");
+                medjubankarskiTransfer.setAnalitikaIzvoda(analitikaIzvoda);
+
+                medjubankarskiTransferService.save(medjubankarskiTransfer);
             }
         });
         proveriRacun.addActionListener(new ActionListener() {

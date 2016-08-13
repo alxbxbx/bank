@@ -5,13 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Entity
 public class AnalitikaIzvoda implements Serializable {
@@ -38,6 +32,7 @@ public class AnalitikaIzvoda implements Serializable {
     private String smer;
     private Integer tipGreske;
     private String status;
+    private MedjubankarskiTransfer medjubankarskiTransfer;
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private NaseljenoMesto naseljenoMesto;
@@ -62,7 +57,7 @@ public class AnalitikaIzvoda implements Serializable {
                            String pozivNaBrojZaduzenja, String racunPoverioca, Integer modelOdobrenja, String pozivNaBrojOdobrenja,
                            boolean hitno, double iznos, String smer, Integer tipGreske, String status, NaseljenoMesto naseljenoMesto,
                            VrstaPlacanja vrstaPlacanja, Valuta valuta, DnevnoStanjeRacuna dnevnoStanjeRacuna,
-                           List<AnalitikaPreseka> analitikePreseka) {
+                           List<AnalitikaPreseka> analitikePreseka, MedjubankarskiTransfer medjubankarskiTransfer) {
         super();
         this.id = id;
         this.brojStavke = brojStavke;
@@ -87,6 +82,7 @@ public class AnalitikaIzvoda implements Serializable {
         this.valuta = valuta;
         this.dnevnoStanjeRacuna = dnevnoStanjeRacuna;
         this.analitikePreseka = analitikePreseka;
+        this.medjubankarskiTransfer = medjubankarskiTransfer;
     }
 
     public Integer getId() {
@@ -273,4 +269,13 @@ public class AnalitikaIzvoda implements Serializable {
         this.analitikePreseka = analitikePreseka;
     }
 
+    @OneToOne(cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "medjubankerski_transfer_id")
+    public MedjubankarskiTransfer getMedjubankarskiTransfer() {
+        return medjubankarskiTransfer;
+    }
+
+    public void setMedjubankarskiTransfer(MedjubankarskiTransfer medjubankarskiTransfer) {
+        this.medjubankarskiTransfer = medjubankarskiTransfer;
+    }
 }

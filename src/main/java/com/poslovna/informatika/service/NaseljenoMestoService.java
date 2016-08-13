@@ -10,23 +10,23 @@ import com.poslovna.informatika.repository.NaseljenoMestoRepository;
 
 @Service("naseljenoMestoService")
 public class NaseljenoMestoService {
-	
-	@Autowired
-	NaseljenoMestoRepository naseljenoMestoRepository;
-	
-	public NaseljenoMesto findOne(Integer id){
-		return naseljenoMestoRepository.findOne(id);
-	}
-	
-	public List<NaseljenoMesto> findAll(){
-		return naseljenoMestoRepository.findAll();
-	}
-	
-	public NaseljenoMesto save(NaseljenoMesto naseljenoMesto){
-		return naseljenoMestoRepository.save(naseljenoMesto);
-	}
-	
-	public void remove(Integer id){
-		naseljenoMestoRepository.delete(id);
-	}
+
+    @Autowired
+    NaseljenoMestoRepository naseljenoMestoRepository;
+
+    public NaseljenoMesto findOne(Integer id) {
+        return naseljenoMestoRepository.findOne(id);
+    }
+
+    public List<NaseljenoMesto> findAll() {
+        return naseljenoMestoRepository.findAll();
+    }
+
+    public NaseljenoMesto save(NaseljenoMesto naseljenoMesto) {
+        return naseljenoMestoRepository.save(naseljenoMesto);
+    }
+
+    public void remove(Integer id) {
+        naseljenoMestoRepository.delete(id);
+    }
 }
