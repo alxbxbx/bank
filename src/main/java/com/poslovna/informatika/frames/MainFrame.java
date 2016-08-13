@@ -2,16 +2,12 @@ package com.poslovna.informatika.frames;
 
 import com.poslovna.informatika.BankApplication;
 import com.poslovna.informatika.configuration.ApplicationContextProvider;
-import com.poslovna.informatika.entities.RacunPravnogLica;
 import com.poslovna.informatika.entities.User;
-import com.poslovna.informatika.service.RacunPravnogLicaService;
 import com.poslovna.informatika.service.UserService;
 
 import net.miginfocom.swing.MigLayout;
-import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import net.sf.jasperreports.view.JasperViewer;
 
 import javax.swing.*;
@@ -27,9 +23,6 @@ import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @PropertySource({ "classpath:application.properties" })
 public class MainFrame extends JFrame {
