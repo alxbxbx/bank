@@ -15,7 +15,7 @@ public class MedjubankarskiTransfer implements Serializable {
     private String tip;
     
     @OneToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "analitika_izvoda_id")
     private AnalitikaIzvoda analitikaIzvoda;
 
     public MedjubankarskiTransfer() {
