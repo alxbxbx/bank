@@ -13,7 +13,9 @@ public class MedjubankarskiTransfer implements Serializable {
     private Integer id;
 
     private String tip;
-
+    
+    @OneToOne
+    @JoinColumn(name = "id")
     private AnalitikaIzvoda analitikaIzvoda;
 
     public MedjubankarskiTransfer() {
@@ -43,7 +45,6 @@ public class MedjubankarskiTransfer implements Serializable {
         this.tip = tip;
     }
 
-    @OneToOne(mappedBy = "medjubankarskiTransfer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public AnalitikaIzvoda getAnalitikaIzvoda() {
         return this.analitikaIzvoda;
     }

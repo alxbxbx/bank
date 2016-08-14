@@ -32,6 +32,8 @@ public class AnalitikaIzvoda implements Serializable {
     private String smer;
     private Integer tipGreske;
     private String status;
+    
+    @OneToOne(mappedBy="analitikaIzvoda")
     private MedjubankarskiTransfer medjubankarskiTransfer;
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
@@ -268,9 +270,7 @@ public class AnalitikaIzvoda implements Serializable {
     public void setAnalitikePreseka(List<AnalitikaPreseka> analitikePreseka) {
         this.analitikePreseka = analitikePreseka;
     }
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @PrimaryKeyJoinColumn
+ 
     public MedjubankarskiTransfer getMedjubankarskiTransfer() {
         return medjubankarskiTransfer;
     }

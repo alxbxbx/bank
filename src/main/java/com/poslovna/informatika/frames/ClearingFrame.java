@@ -189,6 +189,7 @@ public class ClearingFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 AnalitikaIzvoda analitikaIzvoda = new AnalitikaIzvoda();
+                analitikaIzvoda.setIznos(33.3);
                 analitikaIzvodaService.save(analitikaIzvoda);
 
                 MedjubankarskiTransfer medjubankarskiTransfer = new MedjubankarskiTransfer();
@@ -196,6 +197,12 @@ public class ClearingFrame extends JFrame {
                 medjubankarskiTransfer.setAnalitikaIzvoda(analitikaIzvoda);
 
                 medjubankarskiTransferService.save(medjubankarskiTransfer);
+                
+                /* just print
+                MedjubankarskiTransfer masd = medjubankarskiTransferService.findOne(2);
+                System.out.println("Iznos je: " + masd.getAnalitikaIzvoda().getIznos());
+                
+                */
             }
         });
         proveriRacun.addActionListener(new ActionListener() {
