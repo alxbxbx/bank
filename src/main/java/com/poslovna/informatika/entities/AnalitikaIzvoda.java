@@ -269,8 +269,8 @@ public class AnalitikaIzvoda implements Serializable {
         this.analitikePreseka = analitikePreseka;
     }
 
-    @OneToOne(cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "medjubankerski_transfer_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    @PrimaryKeyJoinColumn
     public MedjubankarskiTransfer getMedjubankarskiTransfer() {
         return medjubankarskiTransfer;
     }

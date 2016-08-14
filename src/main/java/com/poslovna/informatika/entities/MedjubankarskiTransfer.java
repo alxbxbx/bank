@@ -43,7 +43,7 @@ public class MedjubankarskiTransfer implements Serializable {
         this.tip = tip;
     }
 
-    @OneToOne(mappedBy = "medjubankerskiTransfer")
+    @OneToOne(mappedBy = "medjubankarskiTransfer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public AnalitikaIzvoda getAnalitikaIzvoda() {
         return this.analitikaIzvoda;
     }

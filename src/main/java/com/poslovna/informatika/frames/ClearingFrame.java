@@ -32,8 +32,10 @@ public class ClearingFrame extends JFrame {
     private JComboBox swiftKodBanke;
     private JTextField obracunskiRacunBankeDuznika, duznik, racunDuznika, racunDuznika_0, racunDuznika_1, racunDuznika_2,
             swiftKodBankePoverioca, svrhaPlacanja, primalac, obracunskiRacunBankePoverioca, modelZaduzenja,
-            pozivNaBrojZaduzenja, racunPoverioca, modelOdobrenja, pozivNaBrojOdobrenja, iznos, sifraValute;
+            pozivNaBrojZaduzenja, racunPoverioca, modelOdobrenja, pozivNaBrojOdobrenja, iznos, sifraValute, brojStavke,
+            nalogodavac;
     private JDatePickerImpl datumNaloga, datumValute;
+    private JCheckBox hitno;
 
     public ClearingFrame() {
         setTitle("RTGS / Kliring Forma");
@@ -160,8 +162,23 @@ public class ClearingFrame extends JFrame {
         // Sifra valute
         jPanel.add(new JLabel("Sifra valute:"), "wrap");
         sifraValute = new JTextField("", 3);
-        jPanel.add(sifraValute);
+        jPanel.add(sifraValute, "wrap");
 
+        // Broj stavke
+        jPanel.add(new JLabel("Broj stavke:"), "wrap");
+        brojStavke = new JTextField("", 20);
+        jPanel.add(brojStavke, "wrap");
+
+        // Hitno
+        hitno = new JCheckBox("Hitno");
+        jPanel.add(hitno, "wrap");
+
+        // Nalogodavac
+        jPanel.add(new JLabel("Nalogodavac"), "wrap");
+        nalogodavac = new JTextField("", 20);
+        jPanel.add(nalogodavac, "wrap");
+
+        // Posalji
         jPanel.add(new JLabel(""), "wrap");
         posalji = new JButton("Posalji");
         jPanel.add(posalji);
