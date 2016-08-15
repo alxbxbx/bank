@@ -15,7 +15,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Properties;
 
 public class ClearingFrame extends JFrame {
@@ -25,6 +27,7 @@ public class ClearingFrame extends JFrame {
     private PravnoLiceService plService = (PravnoLiceService) ApplicationContextProvider.getContext().getBean("pravnoLiceService");
     private KodBankeService kbService = (KodBankeService) ApplicationContextProvider.getContext().getBean("kodBankeService");
     private AnalitikaIzvodaService analitikaIzvodaService = (AnalitikaIzvodaService) ApplicationContextProvider.getContext().getBean("analitikaIzvodaService");
+    private DnevnoStanjeRacunaService dnevnoStanjeRacunaService = (DnevnoStanjeRacunaService) ApplicationContextProvider.getContext().getBean("dnevnoStanjeRacunaService");
     private MedjubankarskiTransferService medjubankarskiTransferService = (MedjubankarskiTransferService) ApplicationContextProvider.getContext().getBean("medjubankarskiTransferService");
     private JPanel jPanel;
     private JScrollPane jScrollPane;
@@ -33,7 +36,7 @@ public class ClearingFrame extends JFrame {
     private JTextField obracunskiRacunBankeDuznika, duznik, racunDuznika, racunDuznika_0, racunDuznika_1, racunDuznika_2,
             swiftKodBankePoverioca, svrhaPlacanja, primalac, obracunskiRacunBankePoverioca, modelZaduzenja,
             pozivNaBrojZaduzenja, racunPoverioca, modelOdobrenja, pozivNaBrojOdobrenja, iznos, sifraValute, brojStavke,
-            nalogodavac;
+            nalogodavac, smer, status;
     private JDatePickerImpl datumNaloga, datumValute;
     private JCheckBox hitno;
 
@@ -50,7 +53,7 @@ public class ClearingFrame extends JFrame {
     }
 
     private void init() {
-        jPanel.add(new JLabel("Molimo Vas da popunite formu..."), "wrap");
+        jPanel.add(new JLabel("Molimo Vas da popunite formu, sva polja su neophodna za izvrsenje transakcije."), "wrap");
         jPanel.add(new JLabel(""), "wrap");
 
         // Racun duznika
@@ -178,6 +181,16 @@ public class ClearingFrame extends JFrame {
         nalogodavac = new JTextField("", 20);
         jPanel.add(nalogodavac, "wrap");
 
+        // Smer
+        jPanel.add(new JLabel("Smer"), "wrap");
+        smer = new JTextField("", 20);
+        jPanel.add(smer, "wrap");
+
+        // Status
+        jPanel.add(new JLabel("Status"), "wrap");
+        status = new JTextField("", 20);
+        jPanel.add(status, "wrap");
+
         // Posalji
         jPanel.add(new JLabel(""), "wrap");
         posalji = new JButton("Posalji");
@@ -188,21 +201,50 @@ public class ClearingFrame extends JFrame {
         posalji.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	
+                // Dnevno stanje racuna
+                DnevnoStanjeRacuna dnevnoStanjeRacuna = new DnevnoStanjeRacuna();
+                /*
+                dnevnoStanjeRacuna.setBrojIzvoda(int);
+                dnevnoStanjeRacuna.setDatumPrometa(new Date());
+                dnevnoStanjeRacuna.setNovoStanje(double);
+                dnevnoStanjeRacuna.setPrethodnoStanje(double);
+                dnevnoStanjeRacuna.setPrometNaTeret(double);
+                dnevnoStanjeRacuna.setPrometUKorist(double);
+                dnevnoStanjeRacuna.setRacunPravnogLica(int);
+                */
+                // Analitika izvoda
                 AnalitikaIzvoda analitikaIzvoda = new AnalitikaIzvoda();
-                analitikaIzvoda.setIznos(54.3);
+                analitikaIzvoda.setBrojStavke(Integer.parseInt(brojStavke.getText()));
+                Date date1 = (Date) datumNaloga.getModel().getValue();
+                analitikaIzvoda.setDatumPrijema(date1);
+                Date date2 = (Date) datumValute.getModel().getValue();
+                analitikaIzvoda.setDatumValute(date2);
+                analitikaIzvoda.setHitno(hitno.isSelected());
+                analitikaIzvoda.setIznos(Integer.parseInt(iznos.getText()));
+                analitikaIzvoda.setModelOdobrenja(Integer.parseInt(modelOdobrenja.getText()));
+                analitikaIzvoda.setModelZaduzenja(Integer.parseInt(modelZaduzenja.getText()));
+                analitikaIzvoda.setNalogodavac(nalogodavac.getText());
+                analitikaIzvoda.setPozivNaBrojOdobrenja(pozivNaBrojOdobrenja.getText());
+                analitikaIzvoda.setPozivNaBrojZaduzenja(pozivNaBrojZaduzenja.getText());
+                analitikaIzvoda.setPrimalac(primalac.getText());
+                analitikaIzvoda.setRacunDuznika(racunDuznika.getText());
+                analitikaIzvoda.setRacunPoverioca(racunPoverioca.getText());
+                analitikaIzvoda.setSmer(smer.getText());
+                analitikaIzvoda.setStatus(status.getText());
+                analitikaIzvoda.setSvrhaPlacanja(svrhaPlacanja.getText());
+                /* analitikaIzvoda.setTipGreske(0);
+                analitikaIzvoda.setDnevnoStanjeRacuna(?);
+                analitikaIzvoda.setNaseljenoMesto(?);
+                analitikaIzvoda.setValuta(?);
+                analitikaIzvoda.setVrstaPlacanja(?);
+                */
                 analitikaIzvodaService.save(analitikaIzvoda);
-               
 
+                // Medjubankarski Transfer
                 MedjubankarskiTransfer medjubankarskiTransfer = new MedjubankarskiTransfer();
                 medjubankarskiTransfer.setTip("clearing");
                 medjubankarskiTransfer.setAnalitikaIzvoda(analitikaIzvoda);
-
                 medjubankarskiTransferService.save(medjubankarskiTransfer);
-                
-                
-               
-               
             }
         });
         proveriRacun.addActionListener(new ActionListener() {

@@ -10,23 +10,28 @@ import com.poslovna.informatika.repository.PravnoLiceRepository;
 
 @Service("pravnoLiceService")
 public class PravnoLiceService {
-	
-	@Autowired
-	PravnoLiceRepository pravnoLiceRepository;
-	
-	public PravnoLice findOne(Integer id){
-		return pravnoLiceRepository.findOne(id);
-	}
-	
-	public List<PravnoLice> findAll(){
-		return pravnoLiceRepository.findAll();
-	}
-	
-	public PravnoLice save(PravnoLice pravnoLice){
-		return pravnoLiceRepository.save(pravnoLice);
-	}
-	
-	public void remove(Integer id){
-		pravnoLiceRepository.delete(id);
-	}
+
+    @Autowired
+    PravnoLiceRepository pravnoLiceRepository;
+
+    public PravnoLice findOne(Integer id) {
+        return pravnoLiceRepository.findOne(id);
+    }
+
+    public PravnoLice findByPib(String pib) {
+        return pravnoLiceRepository.findByPib(pib);
+    }
+
+    public List<PravnoLice> findAll() {
+        return pravnoLiceRepository.findAll();
+    }
+
+    public PravnoLice save(PravnoLice pravnoLice) {
+        return pravnoLiceRepository.save(pravnoLice);
+    }
+
+    public void remove(Integer id) {
+        pravnoLiceRepository.delete(id);
+    }
+
 }

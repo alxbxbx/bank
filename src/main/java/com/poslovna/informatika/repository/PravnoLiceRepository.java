@@ -6,4 +6,6 @@ import com.poslovna.informatika.entities.PravnoLice;
 
 public interface PravnoLiceRepository extends JpaRepository<PravnoLice, Integer>{
 
+    PravnoLice findByPib(String pib);
+
 }
