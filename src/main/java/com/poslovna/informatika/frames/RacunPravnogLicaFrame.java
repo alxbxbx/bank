@@ -5,6 +5,7 @@ import com.poslovna.informatika.entities.DnevnoStanjeRacuna;
 import com.poslovna.informatika.entities.PravnoLice;
 import com.poslovna.informatika.entities.RacunPravnogLica;
 import com.poslovna.informatika.entities.Valuta;
+import com.poslovna.informatika.service.DnevnoStanjeRacunaService;
 import com.poslovna.informatika.service.PravnoLiceService;
 import com.poslovna.informatika.service.RacunPravnogLicaService;
 import com.poslovna.informatika.service.ValutaService;
@@ -21,15 +22,16 @@ import java.util.Date;
 public class RacunPravnogLicaFrame extends JFrame {
 
     private static final long serialVersionUID = 1L;
+    private DnevnoStanjeRacunaService dnevnoStanjeRacunaService = (DnevnoStanjeRacunaService) ApplicationContextProvider.getContext().getBean("dnevnoStanjeRacunaService");
     private PravnoLiceService pravnoLiceService = (PravnoLiceService) ApplicationContextProvider.getContext().getBean("pravnoLiceService");
     private ValutaService valutaService = (ValutaService) ApplicationContextProvider.getContext().getBean("valutaService");
     private RacunPravnogLicaService racunPravnogLicaService = (RacunPravnogLicaService) ApplicationContextProvider.getContext().getBean("racunPravnogLicaService");
     private JPanel jPanel;
-    private JTextField uplata;
+    private JTextField uplata, brojRacunaToDelete;
     private JScrollPane jScrollPane;
     private JComboBox<PravnoLice> pravnaLica;
     private JComboBox<Valuta> valute;
-    private JButton sacuvaj;
+    private JButton sacuvaj, obrisi;
 
     public RacunPravnogLicaFrame() {
         setTitle("");
@@ -53,7 +55,7 @@ public class RacunPravnogLicaFrame extends JFrame {
 
     private void init() {
 
-        jPanel.add(new JLabel("Kreiranje racuna pravnih lica."), "wrap");
+        jPanel.add(new JLabel("========================= Kreiranje racuna pravnih lica ========================= "), "wrap");
         jPanel.add(new JLabel(""), "wrap");
 
         // Pravna Lica
@@ -80,6 +82,17 @@ public class RacunPravnogLicaFrame extends JFrame {
         sacuvaj = new JButton("Sacuvaj");
         jPanel.add(sacuvaj, "wrap");
 
+        jPanel.add(new JLabel("============================ Pregled racuna pravnih lica ============================ "), "wrap");
+        jPanel.add(new JLabel("BROJ RACUNA | PRAVNO LICE | VALUTA"), "wrap");
+        java.util.List<RacunPravnogLica> racuniPravnihLica = racunPravnogLicaService.findByVazeci(true);
+        for (RacunPravnogLica r : racuniPravnihLica) {
+            jPanel.add(new JLabel(r.getBrojRacuna() + " | " + r.getPravnoLice().getNaziv() + " | " + r.getValuta().getNaziv()), "wrap");
+        }
+        brojRacunaToDelete = new JTextField(null, 15);
+        obrisi = new JButton("Obrisi");
+        jPanel.add(brojRacunaToDelete);
+        jPanel.add(obrisi);
+
         listeners();
     }
 
@@ -87,27 +100,48 @@ public class RacunPravnogLicaFrame extends JFrame {
         sacuvaj.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                RacunPravnogLica racunPravnogLica = new RacunPravnogLica();
-                Valuta v1 = (Valuta) valute.getSelectedItem();
-                racunPravnogLica.setValuta(v1);
-                racunPravnogLica.setDatumOtvaranja(new Date());
-                racunPravnogLica.setVazeci(true);
-                PravnoLice p1 = (PravnoLice) pravnaLica.getSelectedItem();
-                racunPravnogLica.setPravnoLice(p1);
-                racunPravnogLicaService.save(racunPravnogLica);
-                racunPravnogLica.setBrojRacuna(racunPravnogLica.getId().toString());
-                racunPravnogLicaService.save(racunPravnogLica);
 
-                DnevnoStanjeRacuna dnevnoStanjeRacuna = new DnevnoStanjeRacuna();
-                dnevnoStanjeRacuna.setDatumPrometa(new Date());
-                // dnevnoStanjeRacuna.setBrojIzvoda();
-                dnevnoStanjeRacuna.setRacunPravnogLica(racunPravnogLica);
-                dnevnoStanjeRacuna.setPrethodnoStanje(0);
-                dnevnoStanjeRacuna.setPrometUKorist(Double.parseDouble(uplata.getText()));
-                dnevnoStanjeRacuna.setPrometNaTeret(0);
-                dnevnoStanjeRacuna.setNovoStanje(0);
-                java.util.List<DnevnoStanjeRacuna> dnevnoStanjeRacunaList = new java.util.ArrayList<>();
-                dnevnoStanjeRacunaList.add(dnevnoStanjeRacuna);
+                if (uplata.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Inicijalna uplata je obavezna.");
+                } else {
+                    RacunPravnogLica racunPravnogLica = new RacunPravnogLica();
+                    Valuta v1 = (Valuta) valute.getSelectedItem();
+                    racunPravnogLica.setValuta(v1);
+                    racunPravnogLica.setDatumOtvaranja(new Date());
+                    racunPravnogLica.setVazeci(true);
+                    PravnoLice p1 = (PravnoLice) pravnaLica.getSelectedItem();
+                    racunPravnogLica.setPravnoLice(p1);
+                    racunPravnogLicaService.save(racunPravnogLica);
+                    racunPravnogLica.setBrojRacuna(racunPravnogLica.getId().toString());
+                    racunPravnogLicaService.save(racunPravnogLica);
+
+                    DnevnoStanjeRacuna dnevnoStanjeRacuna = new DnevnoStanjeRacuna();
+                    dnevnoStanjeRacuna.setDatumPrometa(new Date());
+                    dnevnoStanjeRacuna.setBrojIzvoda(0);
+                    dnevnoStanjeRacuna.setRacunPravnogLica(racunPravnogLica);
+                    dnevnoStanjeRacuna.setPrethodnoStanje(0);
+                    dnevnoStanjeRacuna.setPrometUKorist(Double.parseDouble(uplata.getText()));
+                    dnevnoStanjeRacuna.setPrometNaTeret(0);
+                    dnevnoStanjeRacuna.setNovoStanje(Double.parseDouble(uplata.getText()));
+                    dnevnoStanjeRacuna.setRacunPravnogLica(racunPravnogLica);
+                    dnevnoStanjeRacunaService.save(dnevnoStanjeRacuna);
+
+                    jPanel.removeAll();
+                    jPanel.revalidate();
+                    jPanel.repaint();
+                    init();
+                }
+            }
+        });
+        obrisi.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                racunPravnogLicaService.remove(Integer.parseInt(brojRacunaToDelete.getText()));
+
+                jPanel.removeAll();
+                jPanel.revalidate();
+                jPanel.repaint();
+                init();
             }
         });
     }
