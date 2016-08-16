@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.poslovna.informatika.entities.KursUValuti;
 import com.poslovna.informatika.repository.KursUValutiRepository;
 
-@Service
+@Service("kursUValutiService")
 public class KursUValutiService {
 	
 	@Autowired
