@@ -111,12 +111,14 @@ public class MainFrame extends JFrame {
         JMenu menu3 = new JMenu("Admin");
         JMenuItem jMenuItemPravnoLice = new JMenuItem("Pravno Lice");
         JMenuItem jMenuItemPravnoLiceRacun = new JMenuItem("Pravno Lice: Racun");
+        JMenuItem jMenuItemKursnaLista = new JMenuItem("Kursna lista");
         JMenuItem jMenuItemDrzava = new JMenuItem("Drzava");
         JMenuItem jMenuItemNaseljenoMesto = new JMenuItem("Naseljeno mesto");
         JMenuItem jMenuItemValuta = new JMenuItem("Valuta");
         JMenuItem jMenuItemKurs = new JMenuItem("Kurs u valuti");
         menu3.add(jMenuItemPravnoLice);
         menu3.add(jMenuItemPravnoLiceRacun);
+        menu3.add(jMenuItemKursnaLista);
         menu3.add(jMenuItemDrzava);
         menu3.add(jMenuItemNaseljenoMesto);
         menu3.add(jMenuItemValuta);
@@ -170,6 +172,16 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				KursUValutiFrame kvf = new KursUValutiFrame();
 				kvf.setVisible(true);
+				
+			}
+        	
+        });
+        
+        jMenuItemKursnaLista.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				KursnaListaFrame klf = new KursnaListaFrame();
+				klf.setVisible(true);
 				
 			}
         	

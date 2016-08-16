@@ -26,11 +26,19 @@ public class KursnaLista implements Serializable {
     private Integer brojKursneListe;
     private Date primenjujeSeOd;
 
-    @OneToMany(mappedBy = "kursnaLista", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "kursnaLista", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     private List<KursUValuti> kurseviUValuti = new ArrayList<KursUValuti>();
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private PravnoLice pravnoLice;
+    
+    @Override
+    public String toString(){
+    	String dan = String.valueOf(this.primenjujeSeOd.getDate());
+    	String mesec = String.valueOf(this.primenjujeSeOd.getMonth() + 1);
+    	String godina = String.valueOf(this.primenjujeSeOd.getYear() + 1900);
+    	return (dan + "-" + mesec + "-" + godina);
+    }
 
     public KursnaLista() {
     }

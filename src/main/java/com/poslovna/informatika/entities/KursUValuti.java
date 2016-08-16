@@ -28,6 +28,15 @@ public class KursUValuti implements Serializable {
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private KursnaLista kursnaLista;
+    
+    @Override
+    public String toString(){
+    	String valuta = this.valuta.getNaziv();
+    	String kupovni = String.valueOf(this.kupovni);
+    	String srednji = String.valueOf(this.srednji);
+    	String prodajni = String.valueOf(this.prodajni);
+    	return(valuta + " " + kupovni + " " + srednji + " " + prodajni);
+    }
 
     public KursUValuti() {
     }

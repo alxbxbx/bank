@@ -17,8 +17,10 @@ import javax.swing.JTextField;
 
 import com.poslovna.informatika.configuration.ApplicationContextProvider;
 import com.poslovna.informatika.entities.KursUValuti;
+import com.poslovna.informatika.entities.KursnaLista;
 import com.poslovna.informatika.entities.Valuta;
 import com.poslovna.informatika.service.KursUValutiService;
+import com.poslovna.informatika.service.KursnaListaService;
 import com.poslovna.informatika.service.ValutaService;
 
 import net.miginfocom.swing.MigLayout;
@@ -28,8 +30,10 @@ public class KursUValutiFrame extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private ValutaService valutaService = (ValutaService) ApplicationContextProvider.getContext().getBean("valutaService");
 	private KursUValutiService kuvService = (KursUValutiService) ApplicationContextProvider.getContext().getBean("kursUValutiService");
+	private KursnaListaService klService = (KursnaListaService) ApplicationContextProvider.getContext().getBean("kursnaListaService");
 	private JPanel jPanel;
 	private JComboBox<Valuta> jValute;
+	private JComboBox<KursnaLista> jKursneListe;
 	private JTextField kupovni;
 	private JTextField srednji;
 	private JTextField prodajni;
@@ -81,38 +85,19 @@ public class KursUValutiFrame extends JFrame{
 		jPanel.add(new JLabel("Prodajni:"));
 		jPanel.add(prodajni, "wrap");
 		
+		//Kursna lista
+		jKursneListe = new JComboBox<KursnaLista>();
+		List<KursnaLista> kListe = klService.findAll();
+		for(KursnaLista kl : kListe){
+			jKursneListe.addItem(kl);
+		}
+		jPanel.add(new JLabel("Kursna lista za dan:"));
+		jPanel.add(jKursneListe);
+		
 		//Dodaj
 		dodaj = new JButton("Dodaj");
-		jPanel.add(new JLabel(""));
 		jPanel.add(dodaj, "wrap");
 		
-		jPanel.add(new JLabel("Postojeci kursevi"), "wrap");
-		
-		List<KursUValuti> kursevi = kuvService.findAll();
-		jPanel.add(new JLabel("Redni br."));
-		jPanel.add(new JLabel("Valuta"));
-		jPanel.add(new JLabel("Kupovni"));
-		jPanel.add(new JLabel("Srednji"));
-		jPanel.add(new JLabel("Prodajni"), "wrap");
-		
-		for(KursUValuti k : kursevi){
-			JTextField redniBroj = new JTextField(k.getRedniBroj().toString());
-			JTextField valuta = new JTextField(k.getValuta().getNaziv());
-			JTextField kupovni = new JTextField(String.valueOf(k.getKupovni()));
-			JTextField prodajni = new JTextField(String.valueOf(k.getProdajni()));
-			JTextField srednji = new JTextField(String.valueOf(k.getSrednji()));
-			redniBroj.setEditable(false);
-			valuta.setEditable(false);
-			kupovni.setEditable(false);
-			prodajni.setEditable(false);
-			srednji.setEditable(false);
-			jPanel.add(redniBroj);
-			jPanel.add(valuta);
-			jPanel.add(kupovni);
-			jPanel.add(srednji);
-			jPanel.add(prodajni, "wrap");
-			
-		}
 		
 		dodaj.addActionListener(new ActionListener(){
 			@Override
@@ -130,12 +115,14 @@ public class KursUValutiFrame extends JFrame{
 						Double sr = Double.parseDouble(srednji.getText());
 						
 						Valuta valuta = (Valuta) jValute.getSelectedItem();
+						KursnaLista kl = (KursnaLista) jKursneListe.getSelectedItem();
 						
 						KursUValuti kuv = new KursUValuti();
 						kuv.setKupovni(kp.doubleValue());
 						kuv.setProdajni(pr.doubleValue());
 						kuv.setSrednji(sr.doubleValue());
 						kuv.setValuta(valuta);
+						kuv.setKursnaLista(kl);
 						
 						kuv = kuvService.save(kuv);
 						kuv.setRedniBroj(kuv.getId());
