@@ -113,10 +113,12 @@ public class MainFrame extends JFrame {
         JMenuItem jMenuItemPravnoLiceRacun = new JMenuItem("Pravno Lice: Racun");
         JMenuItem jMenuItemDrzava = new JMenuItem("Drzava");
         JMenuItem jMenuItemNaseljenoMesto = new JMenuItem("Naseljeno mesto");
+        JMenuItem jMenuItemValuta = new JMenuItem("Valuta");
         menu3.add(jMenuItemPravnoLice);
         menu3.add(jMenuItemPravnoLiceRacun);
         menu3.add(jMenuItemDrzava);
         menu3.add(jMenuItemNaseljenoMesto);
+        menu3.add(jMenuItemValuta);
         menuBar0.add(menu3);
         setJMenuBar(menuBar0);
 
@@ -150,6 +152,15 @@ public class MainFrame extends JFrame {
                 NaseljenoMestoFrame nmf = new NaseljenoMestoFrame();
                 nmf.setVisible(true);
             }
+        });
+        
+        jMenuItemValuta.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ValutaFrame vf = new ValutaFrame();
+				vf.setVisible(true);
+			}
+        	
         });
 
         ukidanjeRacuna.addActionListener(new ActionListener() {

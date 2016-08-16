@@ -33,7 +33,11 @@ public class Valuta implements Serializable {
 
     @OneToMany(mappedBy = "valuta", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     private List<RacunPravnogLica> racuniPravnihLica = new ArrayList<RacunPravnogLica>();
-
+    
+    @Override
+    public String toString(){
+    	return this.naziv;
+    }
     public Valuta() {
     }
 
