@@ -110,13 +110,23 @@ public class MainFrame extends JFrame {
         menuBar0.add(menu2);
         JMenu menu3 = new JMenu("Admin");
         JMenuItem jMenuItemPravnoLice = new JMenuItem("Pravno Lice");
+        JMenuItem jMenuItemPravnoLiceRacun = new JMenuItem("Pravno Lice: Racun");
         JMenuItem jMenuItemDrzava = new JMenuItem("Drzava");
         JMenuItem jMenuItemNaseljenoMesto = new JMenuItem("Naseljeno mesto");
         menu3.add(jMenuItemPravnoLice);
+        menu3.add(jMenuItemPravnoLiceRacun);
         menu3.add(jMenuItemDrzava);
         menu3.add(jMenuItemNaseljenoMesto);
         menuBar0.add(menu3);
         setJMenuBar(menuBar0);
+
+        jMenuItemPravnoLiceRacun.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RacunPravnogLicaFrame pf = new RacunPravnogLicaFrame();
+                pf.setVisible(true);
+            }
+        });
 
         jMenuItemPravnoLice.addActionListener(new ActionListener() {
             @Override

@@ -20,7 +20,7 @@ public class PravnoLice implements Serializable {
     @GeneratedValue
     private Integer id;
 
-    private String PIB;
+    private String pib;
     private String naziv;
     private String adresa;
     private String eMail;
@@ -44,12 +44,12 @@ public class PravnoLice implements Serializable {
     public PravnoLice() {
     }
 
-    public PravnoLice(Integer id, String pIB, String naziv, String adresa, String eMail, String web, String telefon,
+    public PravnoLice(Integer id, String pib, String naziv, String adresa, String eMail, String web, String telefon,
                       String fax, boolean banka, List<KodBanke> kodoviBanke, List<KursnaLista> kursneListe,
                       List<RacunPravnogLica> racuniPravnihLica, List<PrenosIzvoda> prenosiIzvoda) {
         super();
         this.id = id;
-        PIB = pIB;
+        this.pib = pib;
         this.naziv = naziv;
         this.adresa = adresa;
         this.eMail = eMail;
@@ -71,12 +71,12 @@ public class PravnoLice implements Serializable {
         this.id = id;
     }
 
-    public String getPIB() {
-        return PIB;
+    public String getPib() {
+        return pib;
     }
 
-    public void setPIB(String pIB) {
-        PIB = pIB;
+    public void setPib(String pib) {
+        this.pib = pib;
     }
 
     public String getNaziv() {
@@ -165,6 +165,10 @@ public class PravnoLice implements Serializable {
 
     public void setPrenosiIzvoda(List<PrenosIzvoda> prenosiIzvoda) {
         this.prenosiIzvoda = prenosiIzvoda;
+    }
+
+    public String toString() {
+        return this.naziv;
     }
 
 }

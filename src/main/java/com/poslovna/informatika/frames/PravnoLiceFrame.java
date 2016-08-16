@@ -14,6 +14,7 @@ import java.awt.event.WindowEvent;
 
 public class PravnoLiceFrame  extends JFrame {
 
+    private static final long serialVersionUID = 1L;
     private PravnoLiceService pravnoLiceService = (PravnoLiceService) ApplicationContextProvider.getContext().getBean("pravnoLiceService");
     private JPanel jPanel;
     private JScrollPane jScrollPane;
@@ -22,7 +23,7 @@ public class PravnoLiceFrame  extends JFrame {
     private JCheckBox banka;
 
     public PravnoLiceFrame() {
-        setTitle("RTGS / Kliring Forma");
+        setTitle("Pravna Lica");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setSize(new Dimension(800, 600));
         setLocationRelativeTo(null);
@@ -92,7 +93,7 @@ public class PravnoLiceFrame  extends JFrame {
         jPanel.add(new JTextArea("============================== PRAVNA LICA U BAZI PODATAKA ================================="), "wrap");
         java.util.List<PravnoLice> pravnaLica = pravnoLiceService.findAll();
         for (PravnoLice p : pravnaLica) {
-            jPanel.add(new Label(p.getPIB() + ", " + p.getNaziv()), "wrap");
+            jPanel.add(new Label(p.getPib() + ", " + p.getNaziv()), "wrap");
         }
         jPanel.add(new JLabel("Unesi PIB i obrisi pravno lice: "), "wrap");
         pibToDelete = new JTextField("Unesi pib...", 20);
@@ -107,20 +108,36 @@ public class PravnoLiceFrame  extends JFrame {
         sacuvaj.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                PravnoLice pravnoLice = new PravnoLice();
-                pravnoLice.setPIB(pib.getText());
-                pravnoLice.setNaziv(naziv.getText());
-                pravnoLice.setAdresa(adresa.getText());
-                pravnoLice.seteMail(email.getText());
-                pravnoLice.setWeb(web.getText());
-                pravnoLice.setTelefon(telefon.getText());
-                pravnoLice.setFax(fax.getText());
-                pravnoLice.setBanka(banka.isSelected());
-                pravnoLiceService.save(pravnoLice);
-                jPanel.removeAll();
-                jPanel.revalidate();
-                jPanel.repaint();
-                init();
+                if (pib.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Unesi PIB.");
+                } else if (naziv.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Unesi naziv.");
+                } else if (adresa.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Unesi adresa.");
+                } else if (email.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Unesi email.");
+                } else if (web.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Unesi web.");
+                } else if (telefon.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Unesi telefon.");
+                } else if (fax.getText().equals("")) {
+                    JOptionPane.showMessageDialog(null, "Unesi fax.");
+                } else {
+                    PravnoLice pravnoLice = new PravnoLice();
+                    pravnoLice.setPib(pib.getText());
+                    pravnoLice.setNaziv(naziv.getText());
+                    pravnoLice.setAdresa(adresa.getText());
+                    pravnoLice.seteMail(email.getText());
+                    pravnoLice.setWeb(web.getText());
+                    pravnoLice.setTelefon(telefon.getText());
+                    pravnoLice.setFax(fax.getText());
+                    pravnoLice.setBanka(banka.isSelected());
+                    pravnoLiceService.save(pravnoLice);
+                    jPanel.removeAll();
+                    jPanel.revalidate();
+                    jPanel.repaint();
+                    init();
+                }
             }
         });
         obrisi.addActionListener(new ActionListener() {
@@ -128,7 +145,11 @@ public class PravnoLiceFrame  extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 String pib = pibToDelete.getText();
                 PravnoLice pl = pravnoLiceService.findByPib(pib);
-                JOptionPane.showMessageDialog(null, pl.getNaziv());
+                pravnoLiceService.remove(pl.getId());
+                jPanel.removeAll();
+                jPanel.revalidate();
+                jPanel.repaint();
+                init();
             }
         });
     }
