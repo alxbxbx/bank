@@ -2,7 +2,6 @@ package com.poslovna.informatika.frames;
 
 import com.poslovna.informatika.BankApplication;
 import com.poslovna.informatika.configuration.ApplicationContextProvider;
-import com.poslovna.informatika.entities.PravnoLice;
 import com.poslovna.informatika.entities.User;
 import com.poslovna.informatika.service.UserService;
 
@@ -117,6 +116,7 @@ public class MainFrame extends JFrame {
         JMenuItem jMenuItemValuta = new JMenuItem("Valuta");
         JMenuItem jMenuItemKurs = new JMenuItem("Kurs u valuti");
         JMenuItem jMenuItemKodoviBanke = new JMenuItem("Kodovi banke");
+        JMenuItem jMenuItemVrstaPlacanja = new JMenuItem("Vrste placanja");
         menu3.add(jMenuItemPravnoLice);
         menu3.add(jMenuItemPravnoLiceRacun);
         menu3.add(jMenuItemKursnaLista);
@@ -125,6 +125,7 @@ public class MainFrame extends JFrame {
         menu3.add(jMenuItemValuta);
         menu3.add(jMenuItemKurs);
         menu3.add(jMenuItemKodoviBanke);
+        menu3.add(jMenuItemVrstaPlacanja);
         menuBar0.add(menu3);
         setJMenuBar(menuBar0);
 
@@ -193,6 +194,15 @@ public class MainFrame extends JFrame {
 				KursnaListaFrame klf = new KursnaListaFrame();
 				klf.setVisible(true);
 				
+			}
+        	
+        });
+        
+        jMenuItemVrstaPlacanja.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VrstaPlacanjaFrame vpf = new VrstaPlacanjaFrame();
+				vpf.setVisible(true);
 			}
         	
         });

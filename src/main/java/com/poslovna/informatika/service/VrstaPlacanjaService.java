@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.poslovna.informatika.entities.VrstaPlacanja;
 import com.poslovna.informatika.repository.VrstaPlacanjaRepository;
 
-@Service
+@Service("vrstaPlacanjaService")
 public class VrstaPlacanjaService {
 
 	@Autowired
