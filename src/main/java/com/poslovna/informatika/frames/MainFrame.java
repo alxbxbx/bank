@@ -116,6 +116,7 @@ public class MainFrame extends JFrame {
         JMenuItem jMenuItemNaseljenoMesto = new JMenuItem("Naseljeno mesto");
         JMenuItem jMenuItemValuta = new JMenuItem("Valuta");
         JMenuItem jMenuItemKurs = new JMenuItem("Kurs u valuti");
+        JMenuItem jMenuItemKodoviBanke = new JMenuItem("Kodovi banke");
         menu3.add(jMenuItemPravnoLice);
         menu3.add(jMenuItemPravnoLiceRacun);
         menu3.add(jMenuItemKursnaLista);
@@ -123,8 +124,17 @@ public class MainFrame extends JFrame {
         menu3.add(jMenuItemNaseljenoMesto);
         menu3.add(jMenuItemValuta);
         menu3.add(jMenuItemKurs);
+        menu3.add(jMenuItemKodoviBanke);
         menuBar0.add(menu3);
         setJMenuBar(menuBar0);
+
+        jMenuItemKodoviBanke.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                KodoviBankeFrame pf = new KodoviBankeFrame();
+                pf.setVisible(true);
+            }
+        });
 
         jMenuItemPravnoLiceRacun.addActionListener(new ActionListener() {
             @Override
