@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -38,7 +37,6 @@ public class KursnaListaFrame extends JFrame{
 	private KursnaListaService klService = (KursnaListaService) ApplicationContextProvider.getContext().getBean("kursnaListaService");
 	private JScrollPane jScrollPane;
 	private JPanel jPanel;
-	private JComboBox<KursUValuti> jKursevi;
 	private JDatePickerImpl datumKursa;
 	private JTextField brojKursneListe;
 	private JButton dodaj;

@@ -25,7 +25,11 @@ public class VrstaPlacanja implements Serializable {
 
     @OneToMany(mappedBy = "vrstaPlacanja", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     private List<AnalitikaIzvoda> analitikeIzvoda = new ArrayList<AnalitikaIzvoda>();
-
+    
+    @Override
+    public String toString(){
+    	return(this.oznakaVrste + " - " + this.nazivVrstePlacanja);
+    }
     public VrstaPlacanja() {
     }
 
