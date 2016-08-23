@@ -18,12 +18,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
 public class ClearingFrame extends JFrame {
 
     private static final long serialVersionUID = 1L;
+    private VrstaPlacanjaService vrstaPlacanjaService = (VrstaPlacanjaService) ApplicationContextProvider.getContext().getBean("vrstaPlacanjaService");
+    private NaseljenoMestoService naseljenoMestoService = (NaseljenoMestoService) ApplicationContextProvider.getContext().getBean("naseljenoMestoService");
+    private DrzavaService drzavaService = (DrzavaService) ApplicationContextProvider.getContext().getBean("drzavaService");
+    private ValutaService valutaService = (ValutaService) ApplicationContextProvider.getContext().getBean("valutaService");
     private RacunPravnogLicaService rplService = (RacunPravnogLicaService) ApplicationContextProvider.getContext().getBean("racunPravnogLicaService");
     private PravnoLiceService plService = (PravnoLiceService) ApplicationContextProvider.getContext().getBean("pravnoLiceService");
     private KodBankeService kbService = (KodBankeService) ApplicationContextProvider.getContext().getBean("kodBankeService");
@@ -34,10 +39,13 @@ public class ClearingFrame extends JFrame {
     private JScrollPane jScrollPane;
     private JButton proveriRacun, posalji;
     private JComboBox swiftKodBanke;
-    private JTextField obracunskiRacunBankeDuznika, duznik, racunDuznika, racunDuznika_0, racunDuznika_1, racunDuznika_2,
-            swiftKodBankePoverioca, svrhaPlacanja, primalac, obracunskiRacunBankePoverioca, modelZaduzenja,
-            pozivNaBrojZaduzenja, racunPoverioca, modelOdobrenja, pozivNaBrojOdobrenja, iznos, sifraValute, brojStavke,
-            nalogodavac, smer, status;
+    private JComboBox<Valuta> valute;
+    private JComboBox<Drzava> drzave;
+    private JComboBox<NaseljenoMesto> mesta;
+    private JComboBox<VrstaPlacanja> vrstaPlacanja;
+    private JTextField duznik, racunDuznika, racunDuznika_0, racunDuznika_1, racunDuznika_2,
+            swiftKodBankePoverioca, svrhaPlacanja, primalac, modelZaduzenja,
+            pozivNaBrojZaduzenja, racunPoverioca, modelOdobrenja, pozivNaBrojOdobrenja, iznos;
     private JDatePickerImpl datumNaloga, datumValute;
     private JCheckBox hitno;
     private RacunPravnogLica racunPravnogLica;
@@ -55,71 +63,79 @@ public class ClearingFrame extends JFrame {
     }
 
     private void init() {
-        jPanel.add(new JLabel("Molimo Vas da popunite formu, sva polja su neophodna za izvrsenje transakcije."), "span 4, wrap");
-        jPanel.add(new JLabel(""), "wrap");
 
-        jPanel.add(new JLabel("==========================================================================================================="), "span 4, wrap");
-        // Racun duznika
-        jPanel.add(new JLabel("Unesite racun pravnog lica (npr. 123 123456 123)"), "span 4, wrap");
-        racunDuznika_0 = new JTextField(null, 15);
+        jPanel.add(new JLabel("=== RACUN DUZNIKA ========================================================================================="), "span 3, wrap");
+
+        jPanel.add(new JLabel("Unesite racun duznika (npr. 123-123456789-12)"), "span 3, wrap");
+        racunDuznika_0 = new JTextField(null, 3);
         racunDuznika_1 = new JTextField(null, 15);
-        racunDuznika_2 = new JTextField(null, 15);
+        racunDuznika_2 = new JTextField(null, 3);
+        proveriRacun = new JButton("Proveri");
         jPanel.add(racunDuznika_0);
         jPanel.add(racunDuznika_1);
-        jPanel.add(racunDuznika_2);
-        proveriRacun = new JButton("Proveri");
+        jPanel.add(racunDuznika_2, "wrap");
         jPanel.add(proveriRacun, "wrap");
 
-        jPanel.add(new JLabel("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"), "span 4, wrap");
+        jPanel.add(new JLabel("=== DUZNIK ================================================================================================"), "span 3, wrap");
 
-        jPanel.add(new JLabel("Racun duznika"));
-        jPanel.add(new JLabel("Obracunski racun banke duznika"));
-        jPanel.add(new JLabel("Duznik"));
-        jPanel.add(new JLabel("SWIFT kod banke"), "wrap");
-
-        // PREFILLED: Obracunski racun banke duznika
-        obracunskiRacunBankeDuznika = new JTextField("", 15);
-        obracunskiRacunBankeDuznika.setEnabled(false);
-        jPanel.add(obracunskiRacunBankeDuznika);
-
-        // PREFILLED: Duznik
+        jPanel.add(new JLabel("Naziv"));
         duznik = new JTextField("", 15);
         duznik.setEnabled(false);
-        jPanel.add(duznik);
+        jPanel.add(duznik, "wrap");
 
-        // PREFILLED: Racun duznika
+        jPanel.add(new JLabel("Racun"));
         racunDuznika = new JTextField("", 15);
         racunDuznika.setEnabled(false);
-        jPanel.add(racunDuznika);
+        jPanel.add(racunDuznika, "wrap");
 
-        // PREFILLED TO PICK: Swift kod
+        jPanel.add(new JLabel("SWIFT"));
         swiftKodBanke = new JComboBox<KodBanke>();
         jPanel.add(swiftKodBanke, "wrap");
 
-        jPanel.add(new JLabel("==========================================================================================================="), "span 4, wrap");
+        jPanel.add(new JLabel("Model"));
+        jPanel.add(new JLabel("Poziv na broj"), "wrap");
+        modelZaduzenja = new JTextField("", 2);
+        pozivNaBrojZaduzenja = new JTextField("", 15);
+        jPanel.add(modelZaduzenja);
+        jPanel.add(pozivNaBrojZaduzenja, "wrap");
 
-        // Swift kod banke poverioca
-        jPanel.add(new JLabel("SWIFT kod banke poverioca:"), "wrap");
-        swiftKodBankePoverioca = new JTextField("", 15);
-        jPanel.add(swiftKodBankePoverioca, "wrap");
+        jPanel.add(new JLabel("=== POVERILAC ============================================================================================="), "span 3, wrap");
 
-        // Obracunski racun banke poverioca
-        jPanel.add(new JLabel("Obracunski racun banke poverioca:"), "wrap");
-        obracunskiRacunBankePoverioca = new JTextField("", 15);
-        jPanel.add(obracunskiRacunBankePoverioca, "wrap");
 
-        // Svrha placanja
-        jPanel.add(new JLabel("Svrha placanja:"), "wrap");
-        svrhaPlacanja = new JTextField("", 15);
-        jPanel.add(svrhaPlacanja, "wrap");
-
-        // Primalac
-        jPanel.add(new JLabel("Primalac:"), "wrap");
+        jPanel.add(new JLabel("Naziv"));
         primalac = new JTextField("", 15);
         jPanel.add(primalac, "wrap");
 
-        // Datum naloga
-        jPanel.add(new JLabel("Datum naloga:"), "wrap");
+        jPanel.add(new JLabel("Racun"));
+        racunPoverioca = new JTextField("", 15);
+        jPanel.add(racunPoverioca, "wrap");
+
+        jPanel.add(new JLabel("SWIFT"));
+        swiftKodBankePoverioca = new JTextField("", 15);
+        jPanel.add(swiftKodBankePoverioca, "wrap");
+
+        jPanel.add(new JLabel("Model odobrenja:"));
+        jPanel.add(new JLabel("Poziv na broj odobrenja:"), "wrap");
+        modelOdobrenja = new JTextField("", 2);
+        pozivNaBrojOdobrenja = new JTextField("", 15);
+        jPanel.add(modelOdobrenja);
+        jPanel.add(pozivNaBrojOdobrenja, "wrap");
+
+        jPanel.add(new JLabel("=== LOKACIJA =============================================================================================="), "span 3, wrap");
+
+        jPanel.add(new JLabel("Drzava"));
+        jPanel.add(new JLabel("Naseljeno mesto"), "wrap");
+        drzave = new JComboBox<Drzava>();
+        for (Drzava d : drzavaService.findAll()) {
+            drzave.addItem(d);
+        }
+        mesta = new JComboBox<NaseljenoMesto>();
+        jPanel.add(drzave);
+        jPanel.add(mesta, "wrap");
+
+        jPanel.add(new JLabel("=== DETALJI TRANSFERA ====================================================================================="), "span 3, wrap");
+
+        jPanel.add(new JLabel("Datum naloga"));
         Properties p = new Properties();
         p.put("text.today", "Today");
         p.put("text.month", "Month");
@@ -129,8 +145,11 @@ public class ClearingFrame extends JFrame {
         datumNaloga = new JDatePickerImpl(datePanel, new DateLabelFormatter());
         jPanel.add(datumNaloga, "wrap");
 
-        // Datum valute
-        jPanel.add(new JLabel("Datum valute:"), "wrap");
+        jPanel.add(new JLabel("Svrha uplate"));
+        svrhaPlacanja = new JTextField("", 15);
+        jPanel.add(svrhaPlacanja, "wrap");
+
+        jPanel.add(new JLabel("Datum i sifra valute"));
         Properties p2 = new Properties();
         p2.put("text.today", "Today");
         p2.put("text.month", "Month");
@@ -138,69 +157,26 @@ public class ClearingFrame extends JFrame {
         UtilDateModel model2 = new UtilDateModel();
         JDatePanelImpl datePanel2 = new JDatePanelImpl(model2, p2);
         datumValute = new JDatePickerImpl(datePanel2, new DateLabelFormatter());
-        jPanel.add(datumValute, "wrap");
+        jPanel.add(datumValute);
+        valute = new JComboBox<Valuta>();
+        for (Valuta v : valutaService.findAll()) {
+            valute.addItem(v);
+        }
+        jPanel.add(valute, "wrap");
 
-        // Model zaduzenja
-        jPanel.add(new JLabel("Model zaduzenja:"), "wrap");
-        modelZaduzenja = new JTextField("", 2);
-        jPanel.add(modelZaduzenja, "wrap");
-
-        // Poziv na broj zaduzenja
-        jPanel.add(new JLabel("Poziv na broj zaduzenja:"), "wrap");
-        pozivNaBrojZaduzenja = new JTextField("", 15);
-        jPanel.add(pozivNaBrojZaduzenja, "wrap");
-
-        // Racun poverioca
-        jPanel.add(new JLabel("Racun poverioca:"), "wrap");
-        racunPoverioca = new JTextField("", 18);
-        jPanel.add(racunPoverioca, "wrap");
-
-        // Model odobrenja
-        jPanel.add(new JLabel("Model odobrenja:"), "wrap");
-        modelOdobrenja = new JTextField("", 2);
-        jPanel.add(modelOdobrenja, "wrap");
-
-        // Poziv na broj odobrenja
-        jPanel.add(new JLabel("Poziv na broj odobrenja:"), "wrap");
-        pozivNaBrojOdobrenja = new JTextField("", 15);
-        jPanel.add(pozivNaBrojOdobrenja, "wrap");
-
-        // Iznos
-        jPanel.add(new JLabel("Iznos:"), "wrap");
+        jPanel.add(new JLabel("Iznos (hitno)"));
         iznos = new JTextField("", 15);
-        jPanel.add(iznos, "wrap");
-
-        // Sifra valute
-        jPanel.add(new JLabel("Sifra valute:"), "wrap");
-        sifraValute = new JTextField("", 3);
-        jPanel.add(sifraValute, "wrap");
-
-        // Broj stavke
-        jPanel.add(new JLabel("Broj stavke:"), "wrap");
-        brojStavke = new JTextField("", 15);
-        jPanel.add(brojStavke, "wrap");
-
-        // Hitno
+        jPanel.add(iznos);
         hitno = new JCheckBox("Hitno");
         jPanel.add(hitno, "wrap");
 
-        // Nalogodavac
-        jPanel.add(new JLabel("Nalogodavac"), "wrap");
-        nalogodavac = new JTextField("", 15);
-        jPanel.add(nalogodavac, "wrap");
+        jPanel.add(new JLabel("Vrsta placanja"));
+        vrstaPlacanja = new JComboBox<VrstaPlacanja>();
+        for (VrstaPlacanja vp : vrstaPlacanjaService.findAll()) {
+            vrstaPlacanja.addItem(vp);
+        }
+        jPanel.add(vrstaPlacanja, "wrap");
 
-        // Smer
-        jPanel.add(new JLabel("Smer"), "wrap");
-        smer = new JTextField("", 15);
-        jPanel.add(smer, "wrap");
-
-        // Status
-        jPanel.add(new JLabel("Status"), "wrap");
-        status = new JTextField("", 15);
-        jPanel.add(status, "wrap");
-
-        // Posalji
-        jPanel.add(new JLabel(""), "wrap");
         posalji = new JButton("Posalji");
         jPanel.add(posalji);
     }
@@ -209,12 +185,6 @@ public class ClearingFrame extends JFrame {
         posalji.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                // Proveri da li je racun pravnog lica odabran
-                if (racunPravnogLica == null) {
-                    JOptionPane.showMessageDialog(null, "Racun pravnog lica nije odabran.");
-                    return;
-                }
 
                 // Dnevno stanje racuna
                 // Uzimamo poslednje, uvek ce postojati bar jedno dnevno stanje jer se ono kreira pri inicijalizaciji
@@ -237,7 +207,6 @@ public class ClearingFrame extends JFrame {
 
                 // Analitika izvoda
                 AnalitikaIzvoda analitikaIzvoda = new AnalitikaIzvoda();
-                analitikaIzvoda.setBrojStavke(Integer.parseInt(brojStavke.getText()));
                 Date date1 = (Date) datumNaloga.getModel().getValue();
                 analitikaIzvoda.setDatumPrijema(date1);
                 Date date2 = (Date) datumValute.getModel().getValue();
@@ -246,23 +215,25 @@ public class ClearingFrame extends JFrame {
                 analitikaIzvoda.setIznos(Integer.parseInt(iznos.getText()));
                 analitikaIzvoda.setModelOdobrenja(Integer.parseInt(modelOdobrenja.getText()));
                 analitikaIzvoda.setModelZaduzenja(Integer.parseInt(modelZaduzenja.getText()));
-                analitikaIzvoda.setNalogodavac(nalogodavac.getText());
+                analitikaIzvoda.setNalogodavac(duznik.getText());
                 analitikaIzvoda.setPozivNaBrojOdobrenja(pozivNaBrojOdobrenja.getText());
                 analitikaIzvoda.setPozivNaBrojZaduzenja(pozivNaBrojZaduzenja.getText());
                 analitikaIzvoda.setPrimalac(primalac.getText());
                 analitikaIzvoda.setRacunDuznika(racunDuznika.getText());
                 analitikaIzvoda.setRacunPoverioca(racunPoverioca.getText());
-                analitikaIzvoda.setSmer(smer.getText());
-                analitikaIzvoda.setStatus(status.getText());
                 analitikaIzvoda.setSvrhaPlacanja(svrhaPlacanja.getText());
-                analitikaIzvoda.setTipGreske(0); //
-                /*
-                analitikaIzvoda.setDnevnoStanjeRacuna(?);
-                analitikaIzvoda.setNaseljenoMesto(?);
-                analitikaIzvoda.setValuta(?);
-                analitikaIzvoda.setVrstaPlacanja(?);
+                analitikaIzvoda.setTipGreske(0);
+                analitikaIzvoda.setSmer("");
+                analitikaIzvoda.setStatus("");
+                analitikaIzvoda.setBrojStavke(0);
+                analitikaIzvoda.setDnevnoStanjeRacuna(dnevnoStanjeRacuna);
+                NaseljenoMesto naseljenoMesto = (NaseljenoMesto) mesta.getSelectedItem();
+                analitikaIzvoda.setNaseljenoMesto(naseljenoMesto);
+                Valuta valuta = (Valuta) valute.getSelectedItem();
+                analitikaIzvoda.setValuta(valuta);
+                VrstaPlacanja vp = (VrstaPlacanja) vrstaPlacanja.getSelectedItem();
+                analitikaIzvoda.setVrstaPlacanja(vp);
                 analitikaIzvodaService.save(analitikaIzvoda);
-                */
 
                 // Medjubankarski Transfer
                 MedjubankarskiTransfer medjubankarskiTransfer = new MedjubankarskiTransfer();
@@ -271,14 +242,26 @@ public class ClearingFrame extends JFrame {
                 medjubankarskiTransferService.save(medjubankarskiTransfer);
             }
         });
+        drzave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Drzava d = (Drzava) drzave.getSelectedItem();
+                if (d != null) {
+                    mesta.removeAllItems();
+                    for (NaseljenoMesto n : naseljenoMestoService.findByDrzavaId(d.getId())) {
+                        mesta.addItem(n);
+                    }
+                }
+            }
+        });
         proveriRacun.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 racunPravnogLica = rplService.findByBrojRacuna(racunDuznika_0.getText() + "-" + racunDuznika_1.getText() + "-" + racunDuznika_2.getText());
+                swiftKodBanke.removeAllItems();
                 for (KodBanke kb : kbService.findAll()) {
                     swiftKodBanke.addItem(kb);
                 }
-                obracunskiRacunBankeDuznika.setText("rply.getSMTH()");
                 duznik.setText(racunPravnogLica.getPravnoLice().getNaziv().toString());
                 racunDuznika.setText(racunPravnogLica.getBrojRacuna().toString());
             }

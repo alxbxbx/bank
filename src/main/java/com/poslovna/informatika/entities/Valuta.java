@@ -38,6 +38,7 @@ public class Valuta implements Serializable {
     public String toString(){
     	return this.naziv;
     }
+
     public Valuta() {
     }
 

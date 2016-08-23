@@ -13,7 +13,11 @@ public class MedjubankarskiTransfer implements Serializable {
     private Integer id;
 
     private String tip;
-    
+
+    private String swiftPoverioca;
+
+    private String swiftDuznika;
+
     @OneToOne
     @JoinColumn(name = "analitika_izvoda_id")
     private AnalitikaIzvoda analitikaIzvoda;
@@ -22,11 +26,13 @@ public class MedjubankarskiTransfer implements Serializable {
 
     }
 
-    public MedjubankarskiTransfer(Integer id, String tip, AnalitikaIzvoda analitikaIzvoda) {
+    public MedjubankarskiTransfer(Integer id, String tip, AnalitikaIzvoda analitikaIzvoda, String swiftDuznika, String swiftPoverioca) {
         super();
         this.id = id;
         this.tip = tip;
         this.analitikaIzvoda = analitikaIzvoda;
+        this.swiftDuznika = swiftDuznika;
+        this.swiftPoverioca = swiftPoverioca;
     }
 
     public Integer getId() {
@@ -53,4 +59,19 @@ public class MedjubankarskiTransfer implements Serializable {
         this.analitikaIzvoda = analitikaIzvoda;
     }
 
+    public String getSwiftPoverioca() {
+        return swiftPoverioca;
+    }
+
+    public void setSwiftPoverioca(String swiftPoverioca) {
+        this.swiftPoverioca = swiftPoverioca;
+    }
+
+    public String getSwiftDuznika() {
+        return swiftDuznika;
+    }
+
+    public void setSwiftDuznika(String swiftDuznika) {
+        this.swiftDuznika = swiftDuznika;
+    }
 }

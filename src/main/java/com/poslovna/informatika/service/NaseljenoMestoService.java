@@ -26,6 +26,10 @@ public class NaseljenoMestoService {
         return naseljenoMestoRepository.save(naseljenoMesto);
     }
 
+    public List<NaseljenoMesto> findByDrzavaId(Integer drzavaId) {
+        return naseljenoMestoRepository.findByDrzavaId(drzavaId);
+    }
+
     public void remove(Integer id) {
         naseljenoMestoRepository.delete(id);
     }
