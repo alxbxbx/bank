@@ -8,6 +8,9 @@ import net.miginfocom.swing.MigLayout;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,6 +40,8 @@ public class ClearingFrame extends JFrame {
             nalogodavac, smer, status;
     private JDatePickerImpl datumNaloga, datumValute;
     private JCheckBox hitno;
+    private RacunPravnogLica racunPravnogLica;
+
 
     public ClearingFrame() {
         setTitle("RTGS / Kliring Forma");
@@ -54,6 +59,8 @@ public class ClearingFrame extends JFrame {
         jPanel.add(new JLabel("Molimo Vas da popunite formu, sva polja su neophodna za izvrsenje transakcije."), "wrap");
         jPanel.add(new JLabel(""), "wrap");
 
+        jPanel.add(new JLabel("======================================================================================================="), "span 4, wrap");
+
         // Racun duznika
         jPanel.add(new JLabel("Primer: 123-123456-123"), "wrap");
         racunDuznika_0 = new JTextField(null, 3);
@@ -65,28 +72,27 @@ public class ClearingFrame extends JFrame {
         proveriRacun = new JButton("Proveri");
         jPanel.add(proveriRacun, "wrap");
 
-        // PREFILLED: Swift kod
-        jPanel.add(new JLabel("SWIFT kod banke:"), "wrap");
+        // PREFILLED TO PICK: Swift kod
+        jPanel.add(new JLabel("SWIFT kod banke | Obracunski racun banke duznika | Duznik | Racun duznika"), "wrap");
         swiftKodBanke = new JComboBox<KodBanke>();
-        jPanel.add(swiftKodBanke, "wrap");
+        jPanel.add(swiftKodBanke);
 
         // PREFILLED: Obracunski racun banke duznika
-        jPanel.add(new JLabel("Obracunski racun banke duznika:"), "wrap");
-        obracunskiRacunBankeDuznika = new JTextField("", 25);
+        obracunskiRacunBankeDuznika = new JTextField("", 15);
         obracunskiRacunBankeDuznika.setEnabled(false);
-        jPanel.add(obracunskiRacunBankeDuznika, "wrap");
+        jPanel.add(obracunskiRacunBankeDuznika);
 
         // PREFILLED: Duznik
-        jPanel.add(new JLabel("Duznik:"), "wrap");
-        duznik = new JTextField("", 25);
+        duznik = new JTextField("", 15);
         duznik.setEnabled(false);
-        jPanel.add(duznik, "wrap");
+        jPanel.add(duznik);
 
-        // PREFILLED: Racun duznika
-        jPanel.add(new JLabel("Racun duznika:"), "wrap");
-        racunDuznika = new JTextField("", 25);
+        // PREFILLED: Racun duznika\
+        racunDuznika = new JTextField("", 15);
         racunDuznika.setEnabled(false);
-        jPanel.add(racunDuznika, "wrap");
+        jPanel.add(racunDuznika);
+
+        jPanel.add(new JLabel("======================================================================================================="), "span 4, wrap");
 
         // Swift kod banke poverioca
         jPanel.add(new JLabel("SWIFT kod banke poverioca:"), "wrap");
@@ -199,17 +205,32 @@ public class ClearingFrame extends JFrame {
         posalji.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                // Proveri da li je racun pravnog lica odabran
+                if (racunPravnogLica == null) {
+                    JOptionPane.showMessageDialog(null, "Racun pravnog lica nije odabran.");
+                    return;
+                }
+
                 // Dnevno stanje racuna
+                // Uzimamo poslednje, uvek ce postojati bar jedno dnevno stanje jer se ono kreira pri inicijalizaciji
+                // samog racuna, nema potrebe za proveravanjem da li je null ili ne.
+                DnevnoStanjeRacuna poslednjeDnevnoStanjeRacuna = dnevnoStanjeRacunaService.findTop1ByRacunPravnogLicaIdOrderByDatumPrometaDesc(7);
+                double novoStanje = poslednjeDnevnoStanjeRacuna.getNovoStanje() - Double.parseDouble(iznos.getText());
+                if (novoStanje < 0) {
+                    JOptionPane.showMessageDialog(null, "Nema dovoljno novca na racunu.");
+                    return;
+                }
                 DnevnoStanjeRacuna dnevnoStanjeRacuna = new DnevnoStanjeRacuna();
-                /*
-                dnevnoStanjeRacuna.setBrojIzvoda(int);
+                dnevnoStanjeRacuna.setBrojIzvoda(0); // wtf
                 dnevnoStanjeRacuna.setDatumPrometa(new Date());
-                dnevnoStanjeRacuna.setNovoStanje(double);
-                dnevnoStanjeRacuna.setPrethodnoStanje(double);
-                dnevnoStanjeRacuna.setPrometNaTeret(double);
-                dnevnoStanjeRacuna.setPrometUKorist(double);
-                dnevnoStanjeRacuna.setRacunPravnogLica(int);
-                */
+                dnevnoStanjeRacuna.setNovoStanje(novoStanje);
+                dnevnoStanjeRacuna.setPrethodnoStanje(poslednjeDnevnoStanjeRacuna.getNovoStanje());
+                dnevnoStanjeRacuna.setPrometNaTeret(Double.parseDouble(iznos.getText()));
+                dnevnoStanjeRacuna.setPrometUKorist(0);
+                dnevnoStanjeRacuna.setRacunPravnogLica(racunPravnogLica);
+                dnevnoStanjeRacunaService.save(dnevnoStanjeRacuna);
+
                 // Analitika izvoda
                 AnalitikaIzvoda analitikaIzvoda = new AnalitikaIzvoda();
                 analitikaIzvoda.setBrojStavke(Integer.parseInt(brojStavke.getText()));
@@ -230,13 +251,14 @@ public class ClearingFrame extends JFrame {
                 analitikaIzvoda.setSmer(smer.getText());
                 analitikaIzvoda.setStatus(status.getText());
                 analitikaIzvoda.setSvrhaPlacanja(svrhaPlacanja.getText());
-                /* analitikaIzvoda.setTipGreske(0);
+                analitikaIzvoda.setTipGreske(0); //
+                /*
                 analitikaIzvoda.setDnevnoStanjeRacuna(?);
                 analitikaIzvoda.setNaseljenoMesto(?);
                 analitikaIzvoda.setValuta(?);
                 analitikaIzvoda.setVrstaPlacanja(?);
-                */
                 analitikaIzvodaService.save(analitikaIzvoda);
+                */
 
                 // Medjubankarski Transfer
                 MedjubankarskiTransfer medjubankarskiTransfer = new MedjubankarskiTransfer();
@@ -248,13 +270,13 @@ public class ClearingFrame extends JFrame {
         proveriRacun.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                RacunPravnogLica rpl = rplService.findByBrojRacuna(racunDuznika_0.getText() + "-" + racunDuznika_1.getText() + "-" + racunDuznika_2.getText());
+                racunPravnogLica = rplService.findByBrojRacuna(racunDuznika_0.getText() + "-" + racunDuznika_1.getText() + "-" + racunDuznika_2.getText());
                 for (KodBanke kb : kbService.findAll()) {
                     swiftKodBanke.addItem(kb);
                 }
                 obracunskiRacunBankeDuznika.setText("rply.getSMTH()");
-                duznik.setText(rpl.getPravnoLice().getNaziv().toString());
-                racunDuznika.setText(rpl.getBrojRacuna().toString());
+                duznik.setText(racunPravnogLica.getPravnoLice().getNaziv().toString());
+                racunDuznika.setText(racunPravnogLica.getBrojRacuna().toString());
             }
         });
         addWindowListener(new WindowAdapter() {
