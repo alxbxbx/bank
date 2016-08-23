@@ -42,7 +42,6 @@ public class ClearingFrame extends JFrame {
     private JCheckBox hitno;
     private RacunPravnogLica racunPravnogLica;
 
-
     public ClearingFrame() {
         setTitle("RTGS / Kliring Forma");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -56,26 +55,27 @@ public class ClearingFrame extends JFrame {
     }
 
     private void init() {
-        jPanel.add(new JLabel("Molimo Vas da popunite formu, sva polja su neophodna za izvrsenje transakcije."), "wrap");
+        jPanel.add(new JLabel("Molimo Vas da popunite formu, sva polja su neophodna za izvrsenje transakcije."), "span 4, wrap");
         jPanel.add(new JLabel(""), "wrap");
 
-        jPanel.add(new JLabel("======================================================================================================="), "span 4, wrap");
-
+        jPanel.add(new JLabel("==========================================================================================================="), "span 4, wrap");
         // Racun duznika
-        jPanel.add(new JLabel("Primer: 123-123456-123"), "wrap");
-        racunDuznika_0 = new JTextField(null, 3);
-        racunDuznika_1 = new JTextField(null, 6);
-        racunDuznika_2 = new JTextField(null, 3);
+        jPanel.add(new JLabel("Unesite racun pravnog lica (npr. 123 123456 123)"), "span 4, wrap");
+        racunDuznika_0 = new JTextField(null, 15);
+        racunDuznika_1 = new JTextField(null, 15);
+        racunDuznika_2 = new JTextField(null, 15);
         jPanel.add(racunDuznika_0);
         jPanel.add(racunDuznika_1);
         jPanel.add(racunDuznika_2);
         proveriRacun = new JButton("Proveri");
         jPanel.add(proveriRacun, "wrap");
 
-        // PREFILLED TO PICK: Swift kod
-        jPanel.add(new JLabel("SWIFT kod banke | Obracunski racun banke duznika | Duznik | Racun duznika"), "wrap");
-        swiftKodBanke = new JComboBox<KodBanke>();
-        jPanel.add(swiftKodBanke);
+        jPanel.add(new JLabel("-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------"), "span 4, wrap");
+
+        jPanel.add(new JLabel("Racun duznika"));
+        jPanel.add(new JLabel("Obracunski racun banke duznika"));
+        jPanel.add(new JLabel("Duznik"));
+        jPanel.add(new JLabel("SWIFT kod banke"), "wrap");
 
         // PREFILLED: Obracunski racun banke duznika
         obracunskiRacunBankeDuznika = new JTextField("", 15);
@@ -87,31 +87,35 @@ public class ClearingFrame extends JFrame {
         duznik.setEnabled(false);
         jPanel.add(duznik);
 
-        // PREFILLED: Racun duznika\
+        // PREFILLED: Racun duznika
         racunDuznika = new JTextField("", 15);
         racunDuznika.setEnabled(false);
         jPanel.add(racunDuznika);
 
-        jPanel.add(new JLabel("======================================================================================================="), "span 4, wrap");
+        // PREFILLED TO PICK: Swift kod
+        swiftKodBanke = new JComboBox<KodBanke>();
+        jPanel.add(swiftKodBanke, "wrap");
+
+        jPanel.add(new JLabel("==========================================================================================================="), "span 4, wrap");
 
         // Swift kod banke poverioca
         jPanel.add(new JLabel("SWIFT kod banke poverioca:"), "wrap");
-        swiftKodBankePoverioca = new JTextField("", 25);
+        swiftKodBankePoverioca = new JTextField("", 15);
         jPanel.add(swiftKodBankePoverioca, "wrap");
 
         // Obracunski racun banke poverioca
         jPanel.add(new JLabel("Obracunski racun banke poverioca:"), "wrap");
-        obracunskiRacunBankePoverioca = new JTextField("", 25);
+        obracunskiRacunBankePoverioca = new JTextField("", 15);
         jPanel.add(obracunskiRacunBankePoverioca, "wrap");
 
         // Svrha placanja
         jPanel.add(new JLabel("Svrha placanja:"), "wrap");
-        svrhaPlacanja = new JTextField("", 25);
+        svrhaPlacanja = new JTextField("", 15);
         jPanel.add(svrhaPlacanja, "wrap");
 
         // Primalac
         jPanel.add(new JLabel("Primalac:"), "wrap");
-        primalac = new JTextField("", 25);
+        primalac = new JTextField("", 15);
         jPanel.add(primalac, "wrap");
 
         // Datum naloga
@@ -143,7 +147,7 @@ public class ClearingFrame extends JFrame {
 
         // Poziv na broj zaduzenja
         jPanel.add(new JLabel("Poziv na broj zaduzenja:"), "wrap");
-        pozivNaBrojZaduzenja = new JTextField("", 20);
+        pozivNaBrojZaduzenja = new JTextField("", 15);
         jPanel.add(pozivNaBrojZaduzenja, "wrap");
 
         // Racun poverioca
@@ -158,7 +162,7 @@ public class ClearingFrame extends JFrame {
 
         // Poziv na broj odobrenja
         jPanel.add(new JLabel("Poziv na broj odobrenja:"), "wrap");
-        pozivNaBrojOdobrenja = new JTextField("", 20);
+        pozivNaBrojOdobrenja = new JTextField("", 15);
         jPanel.add(pozivNaBrojOdobrenja, "wrap");
 
         // Iznos
@@ -173,7 +177,7 @@ public class ClearingFrame extends JFrame {
 
         // Broj stavke
         jPanel.add(new JLabel("Broj stavke:"), "wrap");
-        brojStavke = new JTextField("", 20);
+        brojStavke = new JTextField("", 15);
         jPanel.add(brojStavke, "wrap");
 
         // Hitno
@@ -182,17 +186,17 @@ public class ClearingFrame extends JFrame {
 
         // Nalogodavac
         jPanel.add(new JLabel("Nalogodavac"), "wrap");
-        nalogodavac = new JTextField("", 20);
+        nalogodavac = new JTextField("", 15);
         jPanel.add(nalogodavac, "wrap");
 
         // Smer
         jPanel.add(new JLabel("Smer"), "wrap");
-        smer = new JTextField("", 20);
+        smer = new JTextField("", 15);
         jPanel.add(smer, "wrap");
 
         // Status
         jPanel.add(new JLabel("Status"), "wrap");
-        status = new JTextField("", 20);
+        status = new JTextField("", 15);
         jPanel.add(status, "wrap");
 
         // Posalji
