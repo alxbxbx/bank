@@ -112,7 +112,7 @@ public class RacunPravnogLicaFrame extends JFrame {
                     PravnoLice p1 = (PravnoLice) pravnaLica.getSelectedItem();
                     racunPravnogLica.setPravnoLice(p1);
                     racunPravnogLicaService.save(racunPravnogLica);
-                    racunPravnogLica.setBrojRacuna(racunPravnogLica.getId().toString());
+                    racunPravnogLica.setBrojRacuna("1-" + racunPravnogLica.getId().toString() + "-430");
                     racunPravnogLicaService.save(racunPravnogLica);
 
                     DnevnoStanjeRacuna dnevnoStanjeRacuna = new DnevnoStanjeRacuna();
