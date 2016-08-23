@@ -239,6 +239,9 @@ public class ClearingFrame extends JFrame {
                 MedjubankarskiTransfer medjubankarskiTransfer = new MedjubankarskiTransfer();
                 medjubankarskiTransfer.setTip("clearing");
                 medjubankarskiTransfer.setAnalitikaIzvoda(analitikaIzvoda);
+                KodBanke kb = (KodBanke) swiftKodBanke.getSelectedItem();
+                medjubankarskiTransfer.setSwiftDuznika(kb.getSWIFTKod().toString());
+                medjubankarskiTransfer.setSwiftPoverioca(swiftKodBankePoverioca.getText());
                 medjubankarskiTransferService.save(medjubankarskiTransfer);
             }
         });
