@@ -71,9 +71,9 @@ public class MedjubankarskiTransferFrame extends JFrame {
         jPanel.add(new JLabel("=== TIP PORUKE U PLATNOM PROMETU =========================================================================="), "span 3, wrap");
 
         if (isRTGS) {
-            jPanel.add(new JLabel("MT 103 | Nalog za bezgotovinsko plaćanje (RTGS)"), "wrap");
+            jPanel.add(new JLabel("MT 103 | Nalog za bezgotovinsko plaćanje (RTGS)"), "span 3, wrap");
         } else {
-            jPanel.add(new JLabel("MT 102 | Plaćanja u kliringu"), "wrap");
+            jPanel.add(new JLabel("MT 102 | Plaćanja u kliringu"), "span 3, wrap");
         }
 
         jPanel.add(new JLabel("=== RACUN DUZNIKA ========================================================================================="), "span 3, wrap");
