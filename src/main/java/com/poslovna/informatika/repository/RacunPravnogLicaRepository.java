@@ -12,4 +12,6 @@ public interface RacunPravnogLicaRepository extends JpaRepository<RacunPravnogLi
 
     List<RacunPravnogLica> findByVazeci(Boolean vazeci);
 
+    List<RacunPravnogLica> findByPravnoLiceId(Integer pravnoLiceId);
+
 }

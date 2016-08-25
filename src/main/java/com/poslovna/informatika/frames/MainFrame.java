@@ -105,7 +105,15 @@ public class MainFrame extends JFrame {
             }
         });
         menu1.add(new JMenuItem("Export nalog za medjubankarski transfer u XML datoteku"));
-        menu1.add(new JMenuItem("Generisanje naloga za prenos izvoda datom preduzecu"));
+        JMenuItem jMenuItem3 = new JMenuItem("Generisanje naloga za prenos izvoda datom preduzecu");
+        menu1.add(jMenuItem3);
+        jMenuItem3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GenerisanjePrenosaIzvodaFrame cf = new GenerisanjePrenosaIzvodaFrame();
+                cf.setVisible(true);
+            }
+        });
         menu1.add(new JMenuItem("Export datog izvoda u XML datotetku"));
         menu1.add(new JMenuItem("Import stavki placanja iz XML datoteke"));
         menu1.add(ukidanjeRacuna);

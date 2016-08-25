@@ -126,8 +126,8 @@ public class MedjubankarskiTransferFrame extends JFrame {
         swiftKodBankePoverioca = new JTextField("", 15);
         jPanel.add(swiftKodBankePoverioca, "wrap");
 
-        jPanel.add(new JLabel("Model odobrenja:"));
-        jPanel.add(new JLabel("Poziv na broj odobrenja:"), "wrap");
+        jPanel.add(new JLabel("Model:"));
+        jPanel.add(new JLabel("Poziv na broj:"), "wrap");
         modelOdobrenja = new JTextField("", 2);
         pozivNaBrojOdobrenja = new JTextField("", 15);
         jPanel.add(modelOdobrenja);
@@ -203,19 +203,18 @@ public class MedjubankarskiTransferFrame extends JFrame {
                 // samog racuna, nema potrebe za proveravanjem da li je null ili ne.
                 DnevnoStanjeRacuna poslednjeDnevnoStanjeRacuna = dnevnoStanjeRacunaService.findTop1ByRacunPravnogLicaIdOrderByDatumPrometaDesc(7);
                 double novoStanje = poslednjeDnevnoStanjeRacuna.getNovoStanje() - Double.parseDouble(iznos.getText());
-                if (novoStanje < 0) {
-                    JOptionPane.showMessageDialog(null, "Nema dovoljno novca na racunu.");
-                    return;
+                DnevnoStanjeRacuna dnevnoStanjeRacuna = null;
+                if (novoStanje >= 0) {
+                    dnevnoStanjeRacuna = new DnevnoStanjeRacuna();
+                    dnevnoStanjeRacuna.setBrojIzvoda(0); // wtf
+                    dnevnoStanjeRacuna.setDatumPrometa(new Date());
+                    dnevnoStanjeRacuna.setNovoStanje(novoStanje);
+                    dnevnoStanjeRacuna.setPrethodnoStanje(poslednjeDnevnoStanjeRacuna.getNovoStanje());
+                    dnevnoStanjeRacuna.setPrometNaTeret(Double.parseDouble(iznos.getText()));
+                    dnevnoStanjeRacuna.setPrometUKorist(0);
+                    dnevnoStanjeRacuna.setRacunPravnogLica(racunPravnogLica);
+                    dnevnoStanjeRacunaService.save(dnevnoStanjeRacuna);
                 }
-                DnevnoStanjeRacuna dnevnoStanjeRacuna = new DnevnoStanjeRacuna();
-                dnevnoStanjeRacuna.setBrojIzvoda(0); // wtf
-                dnevnoStanjeRacuna.setDatumPrometa(new Date());
-                dnevnoStanjeRacuna.setNovoStanje(novoStanje);
-                dnevnoStanjeRacuna.setPrethodnoStanje(poslednjeDnevnoStanjeRacuna.getNovoStanje());
-                dnevnoStanjeRacuna.setPrometNaTeret(Double.parseDouble(iznos.getText()));
-                dnevnoStanjeRacuna.setPrometUKorist(0);
-                dnevnoStanjeRacuna.setRacunPravnogLica(racunPravnogLica);
-                dnevnoStanjeRacunaService.save(dnevnoStanjeRacuna);
 
                 // Analitika izvoda
                 AnalitikaIzvoda analitikaIzvoda = new AnalitikaIzvoda();
@@ -234,7 +233,12 @@ public class MedjubankarskiTransferFrame extends JFrame {
                 analitikaIzvoda.setRacunDuznika(racunDuznika.getText());
                 analitikaIzvoda.setRacunPoverioca(racunPoverioca.getText());
                 analitikaIzvoda.setSvrhaPlacanja(svrhaPlacanja.getText());
-                analitikaIzvoda.setTipGreske(0);
+                if (novoStanje < 0) {
+                    analitikaIzvoda.setTipGreske(2);
+                } else {
+
+                    analitikaIzvoda.setTipGreske(1);
+                }
                 analitikaIzvoda.setSmer("");
                 analitikaIzvoda.setStatus("");
                 analitikaIzvoda.setBrojStavke(0);

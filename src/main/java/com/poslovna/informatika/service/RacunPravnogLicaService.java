@@ -40,6 +40,10 @@ public class RacunPravnogLicaService {
         return racunPravnogLicaRepository.save(racunPravnogLica);
     }
 
+    public List<RacunPravnogLica> findByPravnoLiceId(Integer pravnoLiceId) {
+        return racunPravnogLicaRepository.findByPravnoLiceId(pravnoLiceId);
+    }
+
     public void remove(Integer id) {
         RacunPravnogLica rpl = racunPravnogLicaRepository.findOne(id);
         rpl.setVazeci(false);

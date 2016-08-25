@@ -143,4 +143,8 @@ public class RacunPravnogLica implements Serializable {
         this.prenosiIzvoda = prenosiIzvoda;
     }
 
+    public String toString() {
+        return brojRacuna;
+    }
+
 }
