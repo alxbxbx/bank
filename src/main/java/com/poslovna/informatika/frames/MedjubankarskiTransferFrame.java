@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
-public class ClearingFrame extends JFrame {
+public class MedjubankarskiTransferFrame extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private VrstaPlacanjaService vrstaPlacanjaService = (VrstaPlacanjaService) ApplicationContextProvider.getContext().getBean("vrstaPlacanjaService");
@@ -49,8 +49,12 @@ public class ClearingFrame extends JFrame {
     private JDatePickerImpl datumNaloga, datumValute;
     private JCheckBox hitno;
     private RacunPravnogLica racunPravnogLica;
+    private boolean isRTGS = false;
 
-    public ClearingFrame() {
+    public MedjubankarskiTransferFrame(boolean isRTGS) {
+        if (isRTGS) {
+            this.isRTGS = true;
+        }
         setTitle("RTGS / Kliring Forma");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         setSize(new Dimension(800, 600));
@@ -63,6 +67,14 @@ public class ClearingFrame extends JFrame {
     }
 
     private void init() {
+
+        jPanel.add(new JLabel("=== TIP PORUKE U PLATNOM PROMETU =========================================================================="), "span 3, wrap");
+
+        if (isRTGS) {
+            jPanel.add(new JLabel("MT 103 | Nalog za bezgotovinsko plaćanje (RTGS)"), "wrap");
+        } else {
+            jPanel.add(new JLabel("MT 102 | Plaćanja u kliringu"), "wrap");
+        }
 
         jPanel.add(new JLabel("=== RACUN DUZNIKA ========================================================================================="), "span 3, wrap");
 
@@ -237,7 +249,11 @@ public class ClearingFrame extends JFrame {
 
                 // Medjubankarski Transfer
                 MedjubankarskiTransfer medjubankarskiTransfer = new MedjubankarskiTransfer();
-                medjubankarskiTransfer.setTip("clearing");
+                if (isRTGS) {
+                    medjubankarskiTransfer.setTip("MT 103");
+                } else {
+                    medjubankarskiTransfer.setTip("MT 102");
+                }
                 medjubankarskiTransfer.setAnalitikaIzvoda(analitikaIzvoda);
                 KodBanke kb = (KodBanke) swiftKodBanke.getSelectedItem();
                 medjubankarskiTransfer.setSwiftDuznika(kb.getSWIFTKod().toString());

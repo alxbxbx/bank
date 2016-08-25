@@ -85,17 +85,25 @@ public class MainFrame extends JFrame {
 
         // Obrade
         JMenu menu1 = new JMenu("Obrade");
-        JMenuItem jMenuItem0 = new JMenuItem("RTGS medjubankarski transfer ");
+        JMenuItem jMenuItem0 = new JMenuItem("RTGS | Medjubankarski Transfer ");
         JMenuItem ukidanjeRacuna = new JMenuItem("Ukidanje racuna");
         menu1.add(jMenuItem0);
         jMenuItem0.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ClearingFrame cf = new ClearingFrame();
+                MedjubankarskiTransferFrame cf = new MedjubankarskiTransferFrame(true);
                 cf.setVisible(true);
             }
         });
-        menu1.add(new JMenuItem("Clearing medjubankarski transfer (/)"));
+        JMenuItem jMenuItem2 = new JMenuItem("Clearing | Medjubankarski Transfer");
+        menu1.add(jMenuItem2);
+        jMenuItem2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MedjubankarskiTransferFrame cf = new MedjubankarskiTransferFrame(false);
+                cf.setVisible(true);
+            }
+        });
         menu1.add(new JMenuItem("Export nalog za medjubankarski transfer u XML datoteku"));
         menu1.add(new JMenuItem("Generisanje naloga za prenos izvoda datom preduzecu"));
         menu1.add(new JMenuItem("Export datog izvoda u XML datotetku"));
