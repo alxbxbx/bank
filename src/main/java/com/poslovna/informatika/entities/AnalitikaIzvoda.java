@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 public class AnalitikaIzvoda implements Serializable {
@@ -48,7 +49,7 @@ public class AnalitikaIzvoda implements Serializable {
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private DnevnoStanjeRacuna dnevnoStanjeRacuna;
 
-    @OneToMany(mappedBy = "analitikaIzvoda", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "analitikaIzvoda", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     private List<AnalitikaPreseka> analitikePreseka = new ArrayList<AnalitikaPreseka>();
 
     public AnalitikaIzvoda() {
@@ -270,7 +271,8 @@ public class AnalitikaIzvoda implements Serializable {
     public void setAnalitikePreseka(List<AnalitikaPreseka> analitikePreseka) {
         this.analitikePreseka = analitikePreseka;
     }
- 
+    
+    @XmlTransient
     public MedjubankarskiTransfer getMedjubankarskiTransfer() {
         return medjubankarskiTransfer;
     }

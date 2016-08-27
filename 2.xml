@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MedjuBankarskiTransfer tip="RTGS" swiftPoverioca="123123123" swiftDuznika="333222">
+    <id>2</id>
+    <analitikaIzvoda>
+        <hitno>false</hitno>
+        <id>2</id>
+        <iznos>0.0</iznos>
+    </analitikaIzvoda>
+</MedjuBankarskiTransfer>

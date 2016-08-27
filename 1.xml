@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MedjuBankarskiTransfer tip="clearing" swiftPoverioca="123123" swiftDuznika="1123123">
+    <id>1</id>
+    <analitikaIzvoda>
+        <hitno>false</hitno>
+        <id>2</id>
+        <iznos>0.0</iznos>
+    </analitikaIzvoda>
+</MedjuBankarskiTransfer>
