@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 public class DnevnoStanjeRacuna implements Serializable {
@@ -127,7 +128,8 @@ public class DnevnoStanjeRacuna implements Serializable {
     public void setAnalitikeIzvoda(List<AnalitikaIzvoda> analitikeIzvoda) {
         this.analitikeIzvoda = analitikeIzvoda;
     }
-
+    
+    @XmlTransient
     public List<PrenosIzvoda> getPrenosiIzvoda() {
         return prenosiIzvoda;
     }

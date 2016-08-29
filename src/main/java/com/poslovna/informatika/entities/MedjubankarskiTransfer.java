@@ -23,10 +23,8 @@ public class MedjubankarskiTransfer implements Serializable {
     @XmlAttribute
     private String tip;
 
-    @XmlAttribute
     private String swiftPoverioca;
 
-    @XmlAttribute
     private String swiftDuznika;
 
     @OneToOne

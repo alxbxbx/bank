@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 public class PravnoLice implements Serializable {
@@ -35,10 +36,10 @@ public class PravnoLice implements Serializable {
     @OneToMany(mappedBy = "pravnoLice", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     private List<KursnaLista> kursneListe = new ArrayList<KursnaLista>();
 
-    @OneToMany(mappedBy = "pravnoLice", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "pravnoLice", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     private List<RacunPravnogLica> racuniPravnihLica = new ArrayList<RacunPravnogLica>();
 
-    @OneToMany(mappedBy = "pravnoLice", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "pravnoLice", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     private List<PrenosIzvoda> prenosiIzvoda = new ArrayList<PrenosIzvoda>();
 
     public PravnoLice() {
@@ -158,7 +159,8 @@ public class PravnoLice implements Serializable {
     public void setRacuniPravnihLica(List<RacunPravnogLica> racuniPravnihLica) {
         this.racuniPravnihLica = racuniPravnihLica;
     }
-
+    
+    @XmlTransient
     public List<PrenosIzvoda> getPrenosiIzvoda() {
         return prenosiIzvoda;
     }

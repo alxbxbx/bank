@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.poslovna.informatika.entities.PrenosIzvoda;
 import com.poslovna.informatika.repository.PrenosIzvodaRepository;
 
-@Service
+@Service("prenosIzvodaService")
 public class PrenosIzvodaService{
 	
 	@Autowired

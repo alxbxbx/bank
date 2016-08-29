@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 public class AnalitikaPreseka implements Serializable {
@@ -72,7 +73,8 @@ public class AnalitikaPreseka implements Serializable {
     public void setAnalitikaIzvoda(AnalitikaIzvoda analitikaIzvoda) {
         this.analitikaIzvoda = analitikaIzvoda;
     }
-
+    
+    @XmlTransient
     public PrenosIzvoda getPrenosIzvoda() {
         return prenosIzvoda;
     }

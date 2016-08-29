@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 public class RacunPravnogLica implements Serializable {
@@ -35,13 +36,13 @@ public class RacunPravnogLica implements Serializable {
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private PravnoLice pravnoLice;
 
-    @OneToMany(mappedBy = "racunPravnogLica", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "racunPravnogLica", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     private List<DnevnoStanjeRacuna> dnevnaStanjaRacuna = new ArrayList<DnevnoStanjeRacuna>();
 
     @OneToMany(mappedBy = "racunPravnogLica", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     private List<AnalitikaPreseka> analitikePreseka = new ArrayList<AnalitikaPreseka>();
 
-    @OneToMany(mappedBy = "racunPravnogLica", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "racunPravnogLica", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     private List<PrenosIzvoda> prenosiIzvoda = new ArrayList<PrenosIzvoda>();
 
     public RacunPravnogLica() {
@@ -134,7 +135,8 @@ public class RacunPravnogLica implements Serializable {
     public void setAnalitikePreseka(List<AnalitikaPreseka> analitikePreseka) {
         this.analitikePreseka = analitikePreseka;
     }
-
+    
+    @XmlTransient
     public List<PrenosIzvoda> getPrenosiIzvoda() {
         return prenosiIzvoda;
     }

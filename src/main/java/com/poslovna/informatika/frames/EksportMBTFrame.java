@@ -73,7 +73,7 @@ public class EksportMBTFrame extends JFrame{
 						JAXBContext context = JAXBContext.newInstance(MedjubankarskiTransfer.class);
 			            Marshaller m = context.createMarshaller();
 			            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-			            String FILE_NAME = idMBT.getText() + ".xml";
+			            String FILE_NAME = "MedjuBankarskiTransfer-" + idMBT.getText() + ".xml";
 			            m.marshal(mbt, new File(FILE_NAME));
 			            
 			            JOptionPane.showMessageDialog(null, "Uspesno ste eksportovali medjubankarski transfer u xml fajl.");

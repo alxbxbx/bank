@@ -12,7 +12,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
+@XmlRootElement(name = "PrenozIzvoda")
+@XmlAccessorType(XmlAccessType.FIELD)
 @Entity
 public class PrenosIzvoda implements Serializable {
 
@@ -148,7 +154,8 @@ public class PrenosIzvoda implements Serializable {
     public void setStatusNaloga(String statusNaloga) {
         this.statusNaloga = statusNaloga;
     }
-
+    
+    @XmlTransient
     public PravnoLice getPravnoLice() {
         return pravnoLice;
     }
@@ -156,7 +163,8 @@ public class PrenosIzvoda implements Serializable {
     public void setPravnoLice(PravnoLice pravnoLice) {
         this.pravnoLice = pravnoLice;
     }
-
+    
+    @XmlTransient
     public RacunPravnogLica getRacunPravnogLica() {
         return racunPravnogLica;
     }
@@ -164,7 +172,8 @@ public class PrenosIzvoda implements Serializable {
     public void setRacunPravnogLica(RacunPravnogLica racunPravnogLica) {
         this.racunPravnogLica = racunPravnogLica;
     }
-
+    
+    @XmlTransient
     public DnevnoStanjeRacuna getDnevnoStanjeRacuna() {
         return dnevnoStanjeRacuna;
     }
@@ -172,7 +181,8 @@ public class PrenosIzvoda implements Serializable {
     public void setDnevnoStanjeRacuna(DnevnoStanjeRacuna dnevnoStanjeRacuna) {
         this.dnevnoStanjeRacuna = dnevnoStanjeRacuna;
     }
-
+    
+    @XmlTransient
     public List<AnalitikaPreseka> getAnalitikePreseka() {
         return analitikePreseka;
     }

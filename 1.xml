@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<MedjuBankarskiTransfer tip="clearing" swiftPoverioca="123123" swiftDuznika="1123123">
+<MedjuBankarskiTransfer tip="clearing">
     <id>1</id>
+    <swiftPoverioca>123123</swiftPoverioca>
+    <swiftDuznika>1123123</swiftDuznika>
     <analitikaIzvoda>
         <hitno>false</hitno>
         <id>2</id>

@@ -115,7 +115,6 @@ public class MainFrame extends JFrame {
                 cf.setVisible(true);
             }
         });
-        menu1.add(new JMenuItem("Export datog izvoda u XML datotetku"));
         menu1.add(new JMenuItem("Import stavki placanja iz XML datoteke"));
         menu1.add(ukidanjeRacuna);
         menuBar0.add(menu1);

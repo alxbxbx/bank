@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PrenozIzvoda>
+    <id>23</id>
+    <datumNaloga>2016-08-29T22:40:44.591+02:00</datumNaloga>
+    <brojPreseka>23</brojPreseka>
+    <brojPromenaUKorist>1</brojPromenaUKorist>
+    <ukupnoUKorist>9000.0</ukupnoUKorist>
+    <brojPromenaNaTeret>0</brojPromenaNaTeret>
+    <ukupnoNaTeret>0.0</ukupnoNaTeret>
+    <brojPogresnihStavkiUKorist>0</brojPogresnihStavkiUKorist>
+    <brojPogresnihStavkiNaTeret>0</brojPogresnihStavkiNaTeret>
+</PrenozIzvoda>
