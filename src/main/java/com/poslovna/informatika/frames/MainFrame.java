@@ -127,8 +127,9 @@ public class MainFrame extends JFrame {
         menu1.add(ukidanjeRacuna);
         menuBar0.add(menu1);
         JMenu menu2 = new JMenu("Izveštaji");
-        menu2.add(new JMenuItem("Nalog za prenos sa analitikom"));
-        JMenuItem spisak = new JMenuItem("Spisak rauna sa stanjem zadate banke");
+        JMenuItem analitikaIzvestaj = new JMenuItem("Nalozi za prenos sa analitikom");
+        menu2.add(analitikaIzvestaj);
+        JMenuItem spisak = new JMenuItem("Spisak racuna sa stanjem zadate banke");
         menu2.add(spisak);
         menuBar0.add(menu2);
         JMenu menu3 = new JMenu("Admin");
@@ -259,7 +260,7 @@ public class MainFrame extends JFrame {
                             env.getProperty("spring.datasource.password")
                     );
                     JasperPrint jp = JasperFillManager.fillReport(
-                            "C://Users//Alxbxbx//Documents//Poslovna informatika//Reports//PReport1.jasper",
+                            env.getProperty("mbt"),
                             null, conn);
                     JasperViewer.viewReport(jp, false);
 
@@ -273,6 +274,34 @@ public class MainFrame extends JFrame {
                     }
                 }
             }
+        });
+        
+        analitikaIzvestaj.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Connection conn = null;
+                try {
+                    conn = DriverManager.getConnection(
+                            env.getProperty("spring.datasource.url"),
+                            env.getProperty("spring.datasource.username"),
+                            env.getProperty("spring.datasource.password")
+                    );
+                    JasperPrint jp = JasperFillManager.fillReport(
+                            env.getProperty("analitika"),
+                            null, conn);
+                    JasperViewer.viewReport(jp, false);
+
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                } finally {
+                    try {
+                        conn.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+			}
+        	
         });
     }
 
