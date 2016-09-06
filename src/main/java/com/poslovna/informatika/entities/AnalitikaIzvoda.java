@@ -256,6 +256,7 @@ public class AnalitikaIzvoda implements Serializable {
         this.valuta = valuta;
     }
 
+    @XmlTransient
     public DnevnoStanjeRacuna getDnevnoStanjeRacuna() {
         return dnevnoStanjeRacuna;
     }

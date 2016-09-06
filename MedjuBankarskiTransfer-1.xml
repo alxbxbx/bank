@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MedjuBankarskiTransfer tip="clearing">
+    <id>1</id>
+    <analitikaIzvoda>
+        <hitno>false</hitno>
+        <id>1</id>
+        <iznos>54.3</iznos>
+    </analitikaIzvoda>
+</MedjuBankarskiTransfer>

@@ -32,7 +32,7 @@ public class DnevnoStanjeRacuna implements Serializable {
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private RacunPravnogLica racunPravnogLica;
 
-    @OneToMany(mappedBy = "dnevnoStanjeRacuna", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "dnevnoStanjeRacuna", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     private List<AnalitikaIzvoda> analitikeIzvoda = new ArrayList<AnalitikaIzvoda>();
 
     @OneToMany(mappedBy = "dnevnoStanjeRacuna", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
@@ -121,6 +121,7 @@ public class DnevnoStanjeRacuna implements Serializable {
         this.racunPravnogLica = racunPravnogLica;
     }
 
+    @XmlTransient
     public List<AnalitikaIzvoda> getAnalitikeIzvoda() {
         return analitikeIzvoda;
     }

@@ -7,12 +7,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -30,7 +25,7 @@ public class EksportMBTFrame extends JFrame{
 	private JPanel jPanel;
 	private JTextField idMBT;
 	private JButton export;
-	
+
 	public EksportMBTFrame(){
 		setTitle("Eksport medjubankarskih transfera");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
