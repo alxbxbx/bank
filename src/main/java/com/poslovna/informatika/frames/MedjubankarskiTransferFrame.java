@@ -263,6 +263,8 @@ public class MedjubankarskiTransferFrame extends JFrame {
                 medjubankarskiTransfer.setSwiftDuznika(kb.getSWIFTKod().toString());
                 medjubankarskiTransfer.setSwiftPoverioca(swiftKodBankePoverioca.getText());
                 medjubankarskiTransferService.save(medjubankarskiTransfer);
+                JOptionPane.showMessageDialog(null, "Medjubankarski transfer obavljen.");
+                dispose();
             }
         });
         drzave.addActionListener(new ActionListener() {

@@ -115,7 +115,15 @@ public class MainFrame extends JFrame {
                 cf.setVisible(true);
             }
         });
-        menu1.add(new JMenuItem("Import stavki placanja iz XML datoteke"));
+        JMenuItem jMenuItem21 = new JMenuItem("Medjubankarski promet");
+        menu1.add(jMenuItem21);
+        jMenuItem21.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MBTIFrame mf = new MBTIFrame();
+                mf.setVisible(true);
+            }
+        });
         menu1.add(ukidanjeRacuna);
         menuBar0.add(menu1);
         JMenu menu2 = new JMenu("Izveštaji");

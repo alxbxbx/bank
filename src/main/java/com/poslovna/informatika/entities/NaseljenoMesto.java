@@ -28,7 +28,7 @@ public class NaseljenoMesto implements Serializable {
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     private Drzava drzava;
 
-    @OneToMany(mappedBy = "naseljenoMesto", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "naseljenoMesto", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     private List<AnalitikaIzvoda> analitikeIzvoda = new ArrayList<AnalitikaIzvoda>();
     
     @Override

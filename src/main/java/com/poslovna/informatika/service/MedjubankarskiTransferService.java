@@ -5,6 +5,8 @@ import com.poslovna.informatika.repository.MedjubankarskiTransferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("medjubankarskiTransferService")
 public class MedjubankarskiTransferService {
 
@@ -13,6 +15,10 @@ public class MedjubankarskiTransferService {
 
     public MedjubankarskiTransfer findOne(Integer id) {
         return medjubankarskiTransferRepository.findOne(id);
+    }
+
+    public List<MedjubankarskiTransfer> findAll() {
+        return medjubankarskiTransferRepository.findAll();
     }
 
     public MedjubankarskiTransfer save(MedjubankarskiTransfer medjubankarskiTransfer) {
